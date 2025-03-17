@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Configuration;
 import com.eagletech.ecommerce.backend.application.CategoryService;
 import com.eagletech.ecommerce.backend.application.OrderService;
 import com.eagletech.ecommerce.backend.application.ProductService;
+import com.eagletech.ecommerce.backend.application.RegistrationService;
+import com.eagletech.ecommerce.backend.application.UploadFile;
 import com.eagletech.ecommerce.backend.application.UserService;
 import com.eagletech.ecommerce.backend.domain.port.ICategoryRepository;
 import com.eagletech.ecommerce.backend.domain.port.IOrderRepository;
@@ -24,11 +26,20 @@ public class BeanConfiguration {
         return new CategoryService(iCategoryRepository);  
     }
     @Bean
-    public ProductService productService(IProductRepository iProductRepository){
-        return new ProductService(iProductRepository);
+    public ProductService productService(IProductRepository iProductRepository,UploadFile uploadFile){
+        return new ProductService(iProductRepository, uploadFile);
     }
     @Bean
     public OrderService orderService(IOrderRepository IOrderRepository){
         return new OrderService(IOrderRepository);
     }
+    @Bean
+    public UploadFile uploadFile(){
+        return new UploadFile();
+    }
+    @Bean
+    public RegistrationService registrationService(IUserRepository iUserRepository){
+        return new RegistrationService(iUserRepository);
+    }
+
 }

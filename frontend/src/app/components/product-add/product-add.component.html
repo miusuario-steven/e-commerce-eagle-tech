@@ -1,0 +1,55 @@
+<app-header-admin></app-header-admin>
+
+<!-- Page Content -->
+<div class="container">
+  <h1 class="mt-4 mb-3">eCommerce <small>Crear Producto</small></h1>
+
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item active">Crear Productos</li>
+  </ol>
+
+  <h2>Crear Producto</h2>
+  <form (ngSubmit)="addProduct()" enctype="multipart/form-data">
+    <input type="hidden" [(ngModel)]="id" name="id">
+
+    <div class="form-group row">
+      <label class="control-label col-sm-2" for="nombre">Elija una categoría:</label>
+      <div class="col-sm-10">
+        <div class="combo-box">
+          <select [(ngModel)]="categoryId" name="category" id="">
+            <option *ngFor="let categoria of categories" [value]="categoria.id" > {{categoria.name}} </option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Nombre -->
+    <div class="form-group">
+      <label for="nombre">Nombre:</label>
+      <input type="text" class="form-control" id="nombre" [(ngModel)]="name" name="name" required>
+    </div>
+
+    <!-- Descripción -->
+    <div class="form-group">
+      <label for="descripcion">Descripción:</label>
+      <textarea class="form-control" id="descripcion" [(ngModel)]="description" name="description" required></textarea>
+    </div>
+
+    <!-- Precio -->
+    <div class="form-group">
+      <label for="precio">Precio:</label>
+      <input type="number" class="form-control" id="precio" [(ngModel)]="price" name="price" required>
+    </div>
+
+    <!-- Imagen -->
+    <div class="form-group">
+      <label for="img">Imagen:</label>
+      <input type="file" class="form-control-file" id="img" name="img" (change)="onFileSelected($event)" >
+    </div>
+
+    <!-- Botón Guardar -->
+    <button type="submit" class="btn btn-success">Guardar</button>
+  </form>
+</div>
+  

@@ -52,13 +52,14 @@ public class OrderCrudRepositoryImpl implements IOrderRepository {
     }
 
     @Override
-    public void updateStateById(Integer id,String state){
-        if(state.equals(OrderState.CANCELED)){
-            iOrderCrudRepository.updateStateById(id,OrderState.CANCELED);
-        }else{
-            iOrderCrudRepository.updateStateById(id,OrderState.CONFIRMED);
+    public void updateStateById(Integer id, String state) {
+        if (OrderState.CANCELED.name().equals(state)) {
+            iOrderCrudRepository.updateStateById(id, OrderState.CANCELED);
+        } else if (OrderState.CONFIRMED.name().equals(state)) {
+            iOrderCrudRepository.updateStateById(id, OrderState.CONFIRMED);
+        } else {
+            throw new IllegalArgumentException("Estado no válido: " + state);
         }
-        
     }
 
 }
