@@ -20,9 +20,9 @@ export class PaymentSuccessComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.sessionStorage.getItem('order'));
-    let order = this.sessionStorage.getItem('order');
+    const order = this.sessionStorage.getItem('order');
 
-    let formData = new FormData();
+    const formData = new FormData();
 
     formData.append('id', order.id); 
     formData.append('state', OrderState.CONFIRMED.toString());

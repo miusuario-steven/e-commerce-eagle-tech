@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
   ) {}
 
   login() {
-    let userDto = new Userdto(this.username, this.password);
+    const userDto = new Userdto(this.username, this.password);
     this.authentication.login(userDto).subscribe(
       token => {
         console.log(token);

@@ -12,7 +12,7 @@ export class Order {
 
     getTotal(){
         let total =0;
-        for(let orderProduct of this.orderProduct){
+        for(const orderProduct of this.orderProduct){
             total += orderProduct.price * orderProduct.quantity;
             console.log('Total: '+total);
         }

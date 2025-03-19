@@ -27,7 +27,7 @@ export class CategoryAddComponent implements OnInit {
 
   addCategory(){
     console.log(this.name);
-    let category = new Category(this.id,this.name)
+    const category = new Category(this.id,this.name)
     this.categoryService.createCategory(category).subscribe(
       res=>{
         this.toastr.success('Categotia registrada correctamente ','Categorias');
@@ -39,7 +39,7 @@ export class CategoryAddComponent implements OnInit {
   getCategoryById(){
     this.activatedRoute.params.subscribe(
       category =>{
-        let id = category['id'];
+        const id = category['id'];
         if(id){
           console.log('Valor de la variable id: '+id)
           this.categoryService.getCategotyById(id).subscribe(

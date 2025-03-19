@@ -34,7 +34,7 @@ export class DetailProductComponent implements OnInit {
   getProductById(){
     this.activetedRoute.params.subscribe(
       p => {
-        let id = p ['id'];
+        const id = p ['id'];
         if(id){
           this.homeService.getProductById(id).subscribe(
             data =>{
@@ -57,7 +57,7 @@ export class DetailProductComponent implements OnInit {
     console.log('price product:', this.price);
     console.log('quantity product:', this.quantity);
 
-    let item  = new ItemCart(id, this.name, this.quantity, this.price);
+    const item  = new ItemCart(id, this.name, this.quantity, this.price);
 
     this.cartService.addItemCart(item);
 

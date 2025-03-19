@@ -36,7 +36,7 @@ export class RegistrationComponent implements OnInit{
   register(){
     this.username  = this.email;
     this.userType = UserType.USER;
-    let user =  new User (0, this.username, this.name, this.surname, this.email, this.address, this.cellphone, this.password, this.userType);
+    const user =  new User (0, this.username, this.name, this.surname, this.email, this.address, this.cellphone, this.password, this.userType);
     console.log('User JSON:', JSON.stringify(user)); // Agrega este log para verificar el JSON
     this.authentication.register(user).subscribe(
       res => {

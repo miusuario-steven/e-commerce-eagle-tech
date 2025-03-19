@@ -85,7 +85,7 @@ export class ProductAddComponent  implements OnInit{
   getProductById(){
     this.activatedRoute.params.subscribe(
       prod =>{
-        let id = prod['id'];
+        const id = prod['id'];
         if(id){
           console.log('el valor de la variable id es : '+id);
           this.productService.getProductById(id).subscribe(

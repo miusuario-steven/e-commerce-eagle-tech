@@ -52,12 +52,12 @@ export class SumaryOrderComponent implements OnInit {
   generateOrder(){
     this.items.forEach(
       item=>{
-        let orderProduct = new OrderProduct(null, item.productId, item.quantity, item.price);
+        const orderProduct = new OrderProduct(null, item.productId, item.quantity, item.price);
         this.orderProducts.push(orderProduct);
       }
     );
 
-    let order = new Order(null, new Date(),this.orderProducts, this.userId, OrderState.CANCELED);
+    const order = new Order(null, new Date(),this.orderProducts, this.userId, OrderState.CANCELED);
     console.log('Order:'+ order.orderState);
     this.orderService.createOrder(order).subscribe(
       data=> {
@@ -68,7 +68,7 @@ export class SumaryOrderComponent implements OnInit {
 
     //redireccion y pago a paypal 
     let urlPayment;
-    let dataPayment = new DataPayment ('PAYPAL', this.totalCart.toString(), 'USD', 'COMPRA');
+    const dataPayment = new DataPayment ('PAYPAL', this.totalCart.toString(), 'USD', 'COMPRA');
 
     this.paymentService.getUrlPaypalPayment(dataPayment).subscribe(
       data => {
