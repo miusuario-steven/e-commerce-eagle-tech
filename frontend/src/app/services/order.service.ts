@@ -17,10 +17,11 @@ export class OrderService {
     return this.httpClient.post<Order>(this.apiUrl, order, {headers: this.headerService.headers});
   }
 
-  updateOrder(formData:any):Observable<any>{
-    return this.httpClient.post(`${this.apiUrl}/${this.update}`,formData, {headers: this.headerService.headers});
+  updateOrder(orderId: number, newState: string): Observable<any> {
+    const url = `${this.apiUrl}/${this.update}?id=${orderId}&state=${newState}`;
+    return this.httpClient.post(url, null, { headers: this.headerService.headers });
   }
-
+  
   getOrderByUser(userId:number):Observable<Order[]>{
     return this.httpClient.get<Order[]>(`${this.apiUrl}/by-user/${userId}`, {headers: this.headerService.headers});
   }

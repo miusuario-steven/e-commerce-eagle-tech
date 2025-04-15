@@ -1,6 +1,9 @@
 <nav class="navbar navbar-expand-lg fixed-top" style="background-color: #350435;">
     <div class="container-fluid">
-      <a class="navbar-brand" [routerLink]="['/']" style="color: #ffffff;">eCommerce Eagle Tech</a>
+      <a class="navbar-brand d-flex align-items-center" [routerLink]="['/']">
+        <img src="http://localhost:8085/image/logo-eagle.png" alt="Logo" height="60" style="margin-right: 10px;">
+        <span style="color: #ffffff; font-weight: bold;">Eagle Tech</span>
+      </a>      
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -13,7 +16,7 @@
               <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
               <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
-          </li>
+          </li> 
         </ul>
   
         <ul class="navbar-nav ms-auto">

@@ -27,11 +27,18 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(@NonNull HttpServletRequest request, 
+                                    @NonNull HttpServletResponse response, 
+                                    @NonNull FilterChain filterChain)
+            throws ServletException, IOException {
+        
+        // ... tu lógica ...
+
         try {
             if (tokenExists(request, response)) {
                 Claims claims = JWTValid(request);
-                if (claims.get("authorities") != null) {
+                Object authorities = claims.get("authorities");
+                if (authorities != null && !authorities.toString().isEmpty()) {
                     setAuthentication(claims, customUserDetailService);
                 } else {
                     SecurityContextHolder.clearContext();
@@ -41,9 +48,8 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
             }
             filterChain.doFilter(request, response);
         } catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException e) {
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            response.sendError(HttpServletResponse.SC_FORBIDDEN);
-            return;
+            response.sendError(HttpServletResponse.SC_FORBIDDEN, "Token inválido o expirado");
         }
     }
 }
+ 

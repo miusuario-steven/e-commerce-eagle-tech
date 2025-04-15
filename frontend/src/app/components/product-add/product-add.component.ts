@@ -19,7 +19,6 @@ import { SessionStorageService } from '../../services/session-storage.service';
 export class ProductAddComponent  implements OnInit{
   
   id: number =0;
-  code: string = '02';
   name: string = '';
   description : string = '';
   price: number = 0;
@@ -57,8 +56,9 @@ export class ProductAddComponent  implements OnInit{
 
   addProduct(){
     const formData = new FormData();
-    formData.append('id',this.id.toString());
-    formData.append('code',this.code);
+    if (this.id !== 0) {
+      formData.append('id', this.id.toString()); // ✅ Solo si estás actualizando
+    }    
     formData.append('name',this.name);
     formData.append('description',this.description);
     formData.append('price',this.price.toString());
@@ -91,7 +91,6 @@ export class ProductAddComponent  implements OnInit{
           this.productService.getProductById(id).subscribe(
             data =>{
               this.id = data.id;
-              this.code = data.code;
               this.name = data.name;
               this.description = data.description;
               this.urlImage = data.urlImage;

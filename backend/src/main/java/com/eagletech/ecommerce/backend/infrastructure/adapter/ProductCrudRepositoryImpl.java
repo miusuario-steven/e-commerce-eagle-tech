@@ -1,7 +1,7 @@
 package com.eagletech.ecommerce.backend.infrastructure.adapter;
 
 import org.springframework.stereotype.Repository;
-
+import java.util.Optional;
 import com.eagletech.ecommerce.backend.domain.model.Product;
 import com.eagletech.ecommerce.backend.domain.port.IProductRepository;
 import com.eagletech.ecommerce.backend.infrastructure.mapper.ProductMapper;
@@ -37,5 +37,11 @@ public class ProductCrudRepositoryImpl implements IProductRepository{
         );
         iProductCrudRepository.deleteById(id); 
     }
+    @Override
+    public Optional<Product> findTopByOrderByIdDesc() {
+        return iProductCrudRepository.findTopByOrderByIdDesc()
+            .map(productMapper::toProduct);
+}
+
 
 }

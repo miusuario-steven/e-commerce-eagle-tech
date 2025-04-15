@@ -2,6 +2,8 @@ package com.eagletech.ecommerce.backend.infrastructure.entity;
 
 import java.math.BigDecimal;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,6 +23,7 @@ public class OrdenProductEntity {
     private BigDecimal quantity;
     private BigDecimal price;
     private Integer productId;
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "order_id")
     private OrderEntity orderEntity;

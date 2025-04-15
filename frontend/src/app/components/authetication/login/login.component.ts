@@ -5,12 +5,12 @@ import { FormsModule } from '@angular/forms';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { Userdto } from '../../../common/userdto';
 import { SessionStorageService } from '../../../services/session-storage.service';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, HeaderUserComponent, FormsModule],
+  imports: [RouterModule, CommonModule, HeaderUserComponent, FormsModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'] // Cambiado de styleUrl a styleUrls
 })

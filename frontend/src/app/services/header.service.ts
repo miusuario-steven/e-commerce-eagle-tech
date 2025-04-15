@@ -7,20 +7,28 @@ import { SessionStorageService } from './session-storage.service';
 })
 export class HeaderService {
 
-  private token = '';
-  public headers : HttpHeaders = new HttpHeaders;
+  constructor(private sessionStorage: SessionStorageService) {}
 
-  constructor(private sessionStorage : SessionStorageService) { 
-
-    if (this.sessionStorage.getItem('token')!=null) {
-      console.log('HeaderService: '+this.sessionStorage.getItem('token'));
-      this.token = this.sessionStorage.getItem('token').token;
-      this.headers = new HttpHeaders(
-        {
-        //'Content-Type': 'application/json
-        'Authorization': `${this.token}`
-        }
-      );         
-    } 
+  // Headers para JSON (por defecto en GET/DELETE/PUT)
+  get headers(): HttpHeaders {
+    const token = this.getToken();
+    return new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
   }
-}     
+
+  // Headers para FormData (NO incluir Content-Type)
+  get headersForFormData(): HttpHeaders {
+    const token = this.getToken();
+    return new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+  }
+
+  // Obtener solo el token
+  getToken(): string {
+    const tokenObj = this.sessionStorage.getItem('token');
+    return tokenObj ? tokenObj.token : '';
+  }
+}

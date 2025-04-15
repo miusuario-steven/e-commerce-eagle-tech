@@ -1,5 +1,7 @@
 package com.eagletech.ecommerce.backend.domain.port;
 
+import java.util.Optional;
+
 import com.eagletech.ecommerce.backend.domain.model.Product;
 
 public interface IProductRepository {
@@ -7,4 +9,5 @@ public interface IProductRepository {
     Iterable<Product> findALL();
     Product findById(Integer id);
     void deleteById(Integer id);
+    Optional<Product> findTopByOrderByIdDesc();
 }

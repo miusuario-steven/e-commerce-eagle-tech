@@ -6,6 +6,7 @@ import java.util.List;
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.eagletech.ecommerce.backend.domain.model.OrderState;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -35,6 +36,7 @@ public class OrderEntity {
     @ManyToOne
     private UserEntity userEntity;
     
+    @JsonManagedReference
     @OneToMany(mappedBy = "orderEntity", cascade = CascadeType.PERSIST)
     private List<OrdenProductEntity> orderProducts;
 }

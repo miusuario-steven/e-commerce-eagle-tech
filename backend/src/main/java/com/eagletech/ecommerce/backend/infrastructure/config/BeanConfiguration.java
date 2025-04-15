@@ -2,7 +2,7 @@ package com.eagletech.ecommerce.backend.infrastructure.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
+import com.eagletech.ecommerce.backend.infrastructure.mapper.IOrderMapper;
 import com.eagletech.ecommerce.backend.application.CategoryService;
 import com.eagletech.ecommerce.backend.application.OrderService;
 import com.eagletech.ecommerce.backend.application.ProductService;
@@ -30,8 +30,8 @@ public class BeanConfiguration {
         return new ProductService(iProductRepository, uploadFile);
     }
     @Bean
-    public OrderService orderService(IOrderRepository IOrderRepository){
-        return new OrderService(IOrderRepository);
+    public OrderService orderService(IOrderRepository IOrderRepository, IOrderMapper orderMapper){
+        return new OrderService(IOrderRepository, orderMapper);
     }
     @Bean
     public UploadFile uploadFile(){

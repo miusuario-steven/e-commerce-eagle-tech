@@ -32,8 +32,7 @@ public class ProductController {
     // Método para guardar un nuevo producto con datos de texto y un archivo de imagen
     @PostMapping
     public ResponseEntity<Product> save(
-            @RequestParam("id") Integer id,
-            @RequestParam("code") String code,
+            @RequestParam(required = false) Integer id, // ✅ hazlo opcional
             @RequestParam("name") String name,
             @RequestParam("description") String description,
             @RequestParam("price") BigDecimal price,
@@ -46,7 +45,6 @@ public class ProductController {
         // Crear el objeto Product con los datos recibidos
         Product product = new Product();
         product.setId(id);
-        product.setCode(code);
         product.setName(name);
         product.setDescription(description);
         product.setPrice(price);
