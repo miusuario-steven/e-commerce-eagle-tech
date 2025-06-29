@@ -1,28 +1,31 @@
-<nav class="navbar navbar-expand-lg fixed-top" style="background-color: #350435;">
-    <div class="container-fluid">
-      <a class="navbar-brand d-flex align-items-center" [routerLink]="['/']">
-        <img src="http://localhost:8085/image/logo-eagle.png" alt="Logo" height="60" style="margin-right: 10px;">
-        <span style="color: #ffffff; font-weight: bold;">Eagle Tech</span>
-      </a>      
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+<header class="bg-gray-900/80 backdrop-blur-md text-white fixed top-0 left-0 w-full shadow z-50">
+  <div class="max-w-7xl mx-auto flex items-center justify-between px-4 py-3">
+    
+    <!-- Logo -->
+    <a routerLink="/" class="flex items-center space-x-2">
+      <img src="http://localhost:8085/image/logo.png" alt="Logo" class="h-10">
+      <span class="text-white font-bold text-lg">Eagle Tech</span>
+    </a>
+
+    <!-- Buscador -->
+    <form class="hidden md:flex items-center space-x-2">
+      <input
+        type="text"
+        placeholder="Buscar"
+        class="px-3 py-1 rounded-md bg-white/10 border border-white/20 placeholder-white/70 text-white focus:outline-none focus:ring-2 focus:ring-cyan-400"
+      />
+      <button
+        type="submit"
+        class="px-4 py-1 bg-cyan-500 hover:bg-cyan-600 rounded-md text-white text-sm font-medium"
+      >
+        Buscar
       </button>
-  
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <form class="d-flex">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-          </li> 
-        </ul>
-  
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" [routerLink]="['/cart/sumary']" style="color: #ffffff;">Carrito</a></li>
-          <li class="nav-item"><a class="nav-link" [routerLink]="['/user/login']" style="color: #ffffff;">Login</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+    </form>
+
+    <!-- Enlaces -->
+    <nav class="flex items-center space-x-4 text-sm">
+      <a routerLink="/cart/sumary" class="hover:text-cyan-400 transition">Carrito</a>
+      <a routerLink="/user/login" class="hover:text-cyan-400 transition">Login</a>
+    </nav>
+  </div>
+</header>

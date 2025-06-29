@@ -1,33 +1,49 @@
 <app-header-admin></app-header-admin>
 
-<!-- Page Content Add Categories -->
-<div class="container">
-    <!-- Page Heading/Breadcrumbs -->
-    <h1 class="mt-4 mb-3">
-        eCommerce <small>Categorías</small>
-    </h1>
+<section class="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 px-4 py-10 text-white">
+  <div class="max-w-3xl mx-auto">
 
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="">Categorias</a></li>
-        <li class="breadcrumb-item active">Crear Categoría</li>
-    </ol>
+    <!-- Encabezado -->
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold mb-2">Crear Categoría</h1>
+      <nav class="text-white/70 text-sm">
+        <ol class="flex space-x-2">
+          <li><a routerLink="/admin/category" class="hover:text-cyan-400">Categorías</a></li>
+          <li>/</li>
+          <li>Crear</li>
+        </ol>
+      </nav>
+    </div>
 
-    <h2>Crear Categoría</h2>
-    <form class="form-horizontal">
-        <input type="hidden" [(ngModel)]="id">
-        <div class="form-group">
-            <label class="control-label col-sm-2" for="nombre">Nombre:</label>
-            <div class="col-sm-10">
-                <input [(ngModel)]="name" class="form-control" id="name" name="name"
-                    placeholder="Ingrese el nombre de la categoría" autocomplete="off" minlength="5">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-2">
-                <button class="btn btn-success"(click)="addCategory()">
-                    <span class="glyphicon glyphicon-saved"></span> Guardar
-                </button>
-            </div>
-        </div>
+    <!-- Formulario -->
+    <form (ngSubmit)="addCategory()" class="space-y-6 bg-white/10 backdrop-blur-md p-6 rounded-xl shadow-lg">
+      <input type="hidden" [(ngModel)]="id" name="id" />
+
+      <!-- Campo nombre -->
+      <div>
+        <label for="name" class="block mb-1 text-sm font-medium">Nombre de la categoría</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          [(ngModel)]="name"
+          placeholder="Ingrese el nombre de la categoría"
+          required
+          minlength="3"
+          autocomplete="off"
+          class="w-full px-4 py-2 bg-white/20 text-white placeholder-white/70 border border-white/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400"
+        />
+      </div>
+
+      <!-- Botón -->
+      <div class="text-left">
+        <button
+          type="submit"
+          class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-semibold transition"
+        >
+          Guardar categoría
+        </button>
+      </div>
     </form>
-</div>   
+  </div>
+</section>

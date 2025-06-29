@@ -1,7 +1,6 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { Router } from 'express';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-header-admin',
@@ -11,5 +10,9 @@ import { Router } from 'express';
   styleUrl: './header-admin.component.css'
 })
 export class HeaderAdminComponent {
+  isMenuOpen = false;
 
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
 }

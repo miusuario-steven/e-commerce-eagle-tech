@@ -1,35 +1,63 @@
 <app-header-admin></app-header-admin>
 
-<!-- Page Content List Categories-->
-<div class="container">
-    <!-- Page Heading/Breadcrumbs -->
-    <h1 class="mt-4 mb-3">
-        Spring eCommerce <small>Categorias</small>
-    </h1>
+<section class="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 px-4 py-10 text-white">
+  <div class="max-w-6xl mx-auto">
 
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="">Home</a></li>
-        <li class="breadcrumb-item active">Ver Categorías</li>
-    </ol>
+    <!-- Encabezado -->
+    <div class="mb-6">
+      <h1 class="text-2xl sm:text-3xl font-bold mb-2">Eagle Tech Admin <span class="text-cyan-400">Categorías</span></h1>
+      <nav class="text-white/70 text-sm">
+        <ol class="flex space-x-2">
+          <li><a routerLink="/" class="hover:underline text-cyan-300">Home</a></li>
+          <li>/</li>
+          <li>Ver Categorías</li>
+        </ol>
+      </nav>
+    </div>
 
-    <a class="btn btn-primary" routerLink="/admin/category/add"> Crear Categoría</a>
-    <h2>Categorías</h2>
-    <table class="table">
+    <!-- Botón crear categoría -->
+    <div class="mb-6">
+      <a
+        routerLink="/admin/category/add"
+        class="bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-lg font-semibold transition"
+      >
+        Crear Categoría
+      </a>
+    </div>
+
+    <!-- Tabla de categorías -->
+    <div class="overflow-x-auto bg-white/10 backdrop-blur-md rounded-xl shadow-lg">
+      <table class="min-w-full text-sm text-white">
         <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Editar</th>
-                <th>Eliminar</th>
-            </tr>
+          <tr class="bg-white/10 text-left text-white/80 border-b border-white/10">
+            <th class="py-3 px-4">Nombre</th>
+            <th class="py-3 px-4">Editar</th>
+            <th class="py-3 px-4">Eliminar</th>
+          </tr>
         </thead>
-        <tbody *ngFor = "let c of categories">
-            <tr>
-                <td> {{c.name}} </td>                
-                <td><button class="btn btn-warning"[routerLink]=" ['/admin/category/update',c.id] ">Editar</button> </td>
-                <td><button class="btn btn-danger" (click)="deleteCategoryById(c.id)" >Eliminar</button>
-            </tr>
+        <tbody>
+          <tr *ngFor="let c of categories" class="border-b border-white/10 hover:bg-white/5">
+            <td class="py-2 px-4">{{ c.name }}</td>
+            <td class="py-2 px-4">
+              <a
+                [routerLink]="['/admin/category/update', c.id]"
+                class="bg-yellow-400 hover:bg-yellow-500 text-black px-3 py-1 rounded-md font-semibold"
+              >
+                Editar
+              </a>
+            </td>
+            <td class="py-2 px-4">
+              <button
+                (click)="deleteCategoryById(c.id)"
+                class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md font-semibold"
+              >
+                Eliminar
+              </button>
+            </td>
+          </tr>
         </tbody>
-    </table>
+      </table>
+    </div>
 
-</div>
-<!-- /.container -->
+  </div>
+</section>

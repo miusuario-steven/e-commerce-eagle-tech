@@ -1,46 +1,10 @@
-@import 'bootstrap/dist/css/bootstrap.min.css';
+/* ✅ Todos los @import deben ir antes de cualquier regla */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 @import 'ngx-toastr/toastr';
 
+/* ✅ Tus estilos personalizados después de los @import */
 body {
-    padding-top: 56px;
-  }
-
-
-    .product-box img {
-    width: 250px;
-    padding-bottom: 50px;
-}
-
-.product-show{
-    padding-bottom: 20px;
-}
-
-a.primary-btn:hover{
-    background:#0da8e4;
-    color: #fff;
-}
-
-.price{
-    margin: 15px 0 0;
-    font-weight: 800;
-    color: #0da8e4;
-}
-
-.product-box h2{
-    font-size: 18px;
-    padding-bottom: 0;
-    font-weight: 500;
-    color: #350435;
-}
-
-.footer{
-    padding-top: 25px;
-    padding-bottom: 50px;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    background-color: black;
-    color: white;
-    text-align: center;
-    
+  padding-top: 64px;
 }

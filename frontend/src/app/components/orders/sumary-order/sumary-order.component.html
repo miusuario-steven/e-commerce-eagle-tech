@@ -1,71 +1,77 @@
-<!-- Header User-->
 <app-header-user></app-header-user>
 
-<!-- Page Content -->
-<div class="container">
+<section class="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 px-4 py-10 text-white">
+  <div class="max-w-7xl mx-auto">
 
-  <!-- Page Heading/Breadcrumbs -->
-  <h1 class="mt-4 mb-3">
-    Spring eCommerce <small>Resumen de la orden</small>
-  </h1>
+    <!-- Breadcrumb -->
+    <div class="mb-8">
+      <h1 class="text-2xl sm:text-3xl font-bold mb-2">Eagle Tech <span class="text-cyan-400">Resumen de la orden</span></h1>
+      <nav class="text-white/70 text-sm">
+        <ol class="flex space-x-2">
+          <li><a routerLink="/" class="hover:underline text-cyan-300">Home</a></li>
+          <li>/</li>
+          <li>Orden</li>
+        </ol>
+      </nav>
+    </div>
 
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a [routerLink]="['/']">Home</a></li>
-    <li class="breadcrumb-item active">Orden</li>
-  </ol>
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      
+      <!-- Datos de la orden y productos -->
+      <div class="lg:col-span-2 bg-white/10 backdrop-blur-md rounded-2xl shadow-xl p-6 space-y-6">
+        
+        <!-- Datos del cliente -->
+        <div>
+          <h3 class="text-xl font-semibold mb-4">Datos de la orden</h3>
+          <p><strong>Nombre:</strong> {{ firstName }} {{ lastName }}</p>
+          <p><strong>Correo:</strong> {{ email }}</p>
+          <p><strong>Dirección:</strong> {{ address }}</p>
+        </div>
 
-  <!-- Blog Post -->
-  <div class="card mb-4">
-    <div class="card-body">
-      <div class="row">
-        <div class="col-lg-9">
-          <div class="card-body">
-            <h5 class="card-title">
-              DATOS ORDEN
-            </h5>
-            <h6><strong> Nombre: </strong> {{firstName}} {{lastName}}</h6>
-            <h6><strong>Correo: </strong> {{email}} </h6>
-            <h6><strong> Dirección: </strong> {{address}} </h6>
-
-            <h5 class="card-title">
-              PRODUCTOS
-            </h5>
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">Producto</th>
-                    <th scope="col">Precio</th>
-                    <th scope="col">Cantidad</th>
-                    <th scope="col">Total</th>
-                    <th>Eliminar</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let item of items">
-                    <td> {{item.productName}} </td>
-                    <td> {{item.price}} </td>
-                    <td> {{item.quantity}} </td>
-                    <td> {{item.getTotalPriceItem()}} </td>
-                    <td><button class="btn btn-danger" (click)="deleteItemCart(item.productId)">Quitar</button> </td>
-                  </tr>
-                </tbody>
-              </table>
+        <!-- Tabla de productos -->
+        <div>
+          <h3 class="text-xl font-semibold mb-4 mt-6">Productos</h3>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm text-white/90">
+              <thead>
+                <tr class="bg-white/10 text-left">
+                  <th class="py-2 px-3">Producto</th>
+                  <th class="py-2 px-3">Precio</th>
+                  <th class="py-2 px-3">Cantidad</th>
+                  <th class="py-2 px-3">Total</th>
+                  <th class="py-2 px-3">Eliminar</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of items" class="border-b border-white/10">
+                  <td class="py-2 px-3">{{ item.productName }}</td>
+                  <td class="py-2 px-3">${{ item.price }}</td>
+                  <td class="py-2 px-3">{{ item.quantity }}</td>
+                  <td class="py-2 px-3">${{ item.getTotalPriceItem() }}</td>
+                  <td class="py-2 px-3">
+                    <button (click)="deleteItemCart(item.productId)" class="text-red-400 hover:underline">
+                      Quitar
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
+      </div>
 
-
-        <div class="col-lg-3">
-          <h2 class="card-title">Resumen Orden</h2>
-
-          <ul class="list-group">
-            <li class="list-group-item">
-              <h5> Total: {{totalCart}} </h5>
-            </li>
-            <a class="btn btn-dark" (click)="generateOrder()">Pagar con Paypal</a>
-          </ul>
-        </div>
+      <!-- Resumen y pago -->
+      <div class="bg-white/10 backdrop-blur-md rounded-2xl shadow-xl p-6 h-fit">
+        <h3 class="text-xl font-semibold mb-4">Resumen de orden</h3>
+        <p class="mb-4 text-lg"><strong>Total:</strong> ${{ totalCart }}</p>
+        <button
+          (click)="generateOrder()"
+          class="w-full bg-cyan-500 hover:bg-cyan-600 text-white py-3 rounded-lg font-semibold transition"
+        >
+          Pagar con PayPal
+        </button>
       </div>
     </div>
+
   </div>
-</div>
-<!-- /.container -->    
+</section>

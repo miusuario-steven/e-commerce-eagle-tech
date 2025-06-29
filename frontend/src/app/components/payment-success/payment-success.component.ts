@@ -14,25 +14,28 @@ import { OrderState } from '../../common/order-state';
 export class PaymentSuccessComponent implements OnInit {
 
   constructor(
-    private orderService:OrderService,
-    private sessionStorage:SessionStorageService
-  ) { }
+    private orderService: OrderService,
+    private sessionStorage: SessionStorageService
+  ) {}
 
   ngOnInit(): void {
-    console.log(this.sessionStorage.getItem('order'));
     const order = this.sessionStorage.getItem('order');
+    console.log('Orden en session:', order);
 
     const orderId = order.id;
     const newState = OrderState.CONFIRMED.toString();
-    
+
     this.orderService.updateOrder(orderId, newState).subscribe(
-      data => { 
-        console.log(data);
-        console.log('LogoutComponent: ' + this.sessionStorage.getItem('token'));
+      data => {
+        console.log('Orden actualizada:', data);
+
+        // ✅ Limpiar la sesión
+        console.log('Token antes de limpiar:', this.sessionStorage.getItem('token'));
         this.sessionStorage.removeItem('token');
-        console.log('LogoutComponent eliminado: ' + this.sessionStorage.getItem('token'));
+        this.sessionStorage.removeItem('order');
+        console.log('Token después de limpiar:', this.sessionStorage.getItem('token'));
+        console.log('Orden eliminada de la sesión');
       }
     );
   }
-
 }

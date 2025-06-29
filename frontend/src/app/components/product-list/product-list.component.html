@@ -1,41 +1,69 @@
 <app-header-admin></app-header-admin>
 
-<!-- Page Content List Products-->
-<div class="container">
-    <!-- Page Heading/Breadcrumbs -->
-    <h1 class="mt-4 mb-3">
-        Spring eCommerce <small>Productos</small>
-    </h1>     
+<section class="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 px-4 py-10 text-white">
+  <div class="max-w-7xl mx-auto">
 
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a routerLink="">Home</a></li>
-        <li class="breadcrumb-item active">Ver Productos</li>
-    </ol>
-    
-    <a class="btn btn-primary"(click)="goToAddProductForm()">Crear Producto</a>
-    <h2>Productos</h2>
-    <table class="table">
+    <!-- Encabezado -->
+    <div class="mb-6">
+      <h1 class="text-2xl sm:text-3xl font-bold mb-2">Eagle Tech Admin <span class="text-cyan-400">Productos</span></h1>
+      <nav class="text-white/70 text-sm">
+        <ol class="flex space-x-2">
+          <li><a routerLink="/" class="hover:underline text-cyan-300">Home</a></li>
+          <li>/</li>
+          <li>Ver Productos</li>
+        </ol>
+      </nav>
+    </div>
+
+    <!-- Botón crear producto -->
+    <div class="mb-6">
+      <button
+        (click)="goToAddProductForm()"
+        class="bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-lg font-semibold transition"
+      >
+        Crear Producto
+      </button>
+    </div>
+
+    <!-- Tabla de productos -->
+    <div class="overflow-x-auto bg-white/10 backdrop-blur-md rounded-xl shadow-lg">
+      <table class="min-w-full text-sm text-white">
         <thead>
-            <tr>
-                <th>Código</th>
-                <th>Nombre</th>
-                <th>Descripción</th>
-                <th>Precio</th>
-                <th>Editar</th>
-                <th>Eliminar</th>
-            </tr>
+          <tr class="bg-white/10 text-left text-white/80 border-b border-white/10">
+            <th class="py-3 px-4">Código</th>
+            <th class="py-3 px-4">Nombre</th>
+            <th class="py-3 px-4">Descripción</th>
+            <th class="py-3 px-4">Precio</th>
+            <th class="py-3 px-4">Editar</th>
+            <th class="py-3 px-4">Eliminar</th>
+          </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let product of products">
-                <td>{{ product.code }}</td>
-                <td>{{ product.name }}</td>
-                <td>{{ product.description }}</td>
-                <td>{{ product.price }}</td>
-                <td><button class="btn btn-warning"[routerLink]="['/admin/product/update', product.id]">Editar</button></td>
-                <td><button class="btn btn-danger" (click)="deleteProductById(product.id)">Eliminar</button></td>
-            </tr>
+          <tr *ngFor="let product of products" class="border-b border-white/10 hover:bg-white/5">
+            <td class="py-2 px-4">{{ product.code }}</td>
+            <td class="py-2 px-4">{{ product.name }}</td>
+            <td class="py-2 px-4">{{ product.description }}</td>
+            <td class="py-2 px-4">${{ product.price }}</td>
+            <td class="py-2 px-4">
+              <button
+                [routerLink]="['/admin/product/update', product.id]"
+                class="bg-yellow-400 hover:bg-yellow-500 text-black px-3 py-1 rounded-md font-semibold"
+              >
+                Editar
+              </button>
+            </td>
+            <td class="py-2 px-4">
+              <button
+                (click)="deleteProductById(product.id)"
+                class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md font-semibold"
+              >
+                Eliminar
+              </button>
+            </td>
+          </tr>
         </tbody>
-    </table>        
-</div>
-  
+      </table>
+    </div>
 
+  </div>
+</section>

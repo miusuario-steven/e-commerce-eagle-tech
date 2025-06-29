@@ -1,51 +1,58 @@
 <app-header-user></app-header-user>
 
-<!-- Page Content -->
-<div class="container">
-
-
-    <!-- Page Heading/Breadcrumbs -->
-    <h1 class="mt-4 mb-3">
-      Spring eCommerce <small>Producto</small>
-    </h1>
-
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-      <li class="breadcrumb-item active">Producto</li>
-    </ol>
+<section class="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 px-4 py-10">
+  <div class="max-w-6xl mx-auto">
     
-    <!-- Blog Post -->
-    <div class="card mb-4">
-      <div class="card-body">
-        <div class="row">
-          <div class="col-lg-6">
-            <a href="#"> <img class="img-fluid rounded"
-              src="{{urlImage}}" alt="">
-            </a>
-          </div>
-          <div class="col-lg-6">
-            <form action="#" method="POST">
-              <h2 class="card-title"> {{name}} </h2>
-
-              <ul class="list-group">
-                <li class="list-group-item"><h5>Precio: {{price}} </h5></li>
-                <li class="list-group-item">
-                  <p>Descripción: {{description}} </p>
-                </li>
-                <li class="list-group-item"><h6>
-                  Cantidad: <input type="number" [(ngModel)]="quantity" id="quantity" name="quantity" autocomplete="off"
-                  min="1" max="5" value="1">
-                </h6></li>
-              </ul>
-
-
-              <button (click)="addCart(id)"  class="btn btn-dark">Añadir al carrito </button>
-
-            </form>
-          </div>
-        </div>
-      </div>
+    <!-- Breadcrumb y título -->
+    <div class="mb-8 text-white">
+      <h1 class="text-2xl sm:text-3xl font-bold mb-2">Eagle Tech <span class="text-cyan-400">Producto</span></h1>
+      <nav class="text-white/70 text-sm">
+        <ol class="flex space-x-2">
+          <li><a routerLink="/" class="hover:underline text-cyan-300">Home</a></li>
+          <li>/</li>
+          <li>Producto</li>
+        </ol>
+      </nav>
     </div>
 
+    <!-- Producto -->
+    <div class="bg-white/10 backdrop-blur-lg rounded-2xl shadow-xl text-white p-6 md:p-10 grid grid-cols-1 md:grid-cols-2 gap-8">
+      
+      <!-- Imagen -->
+      <div class="flex justify-center">
+        <img [src]="urlImage" alt="{{name}}" class="w-full max-w-sm object-contain rounded-xl shadow-md" />
+      </div>
+
+      <!-- Detalle -->
+      <div>
+        <h2 class="text-2xl sm:text-3xl font-bold mb-4">{{ name }}</h2>
+        <div class="mb-4">
+          <span class="text-cyan-400 text-xl font-bold">${{ price }}</span>
+        </div>
+        <p class="text-white/80 mb-6">Descripción: {{ description }}</p>
+
+        <!-- Cantidad -->
+        <label for="quantity" class="block mb-1 text-sm">Cantidad:</label>
+        <input
+          type="number"
+          id="quantity"
+          name="quantity"
+          [(ngModel)]="quantity"
+          min="1"
+          max="5"
+          value="1"
+          autocomplete="off"
+          class="w-24 px-4 py-2 bg-white/20 backdrop-blur text-white rounded-lg border border-white/20 focus:outline-none focus:ring-2 focus:ring-cyan-400 mb-6"
+        />
+
+        <!-- Botón -->
+        <button
+          (click)="addCart(id)"
+          class="bg-cyan-500 hover:bg-cyan-600 px-6 py-3 rounded-lg font-semibold transition text-white"
+        >
+          Añadir al carrito
+        </button>
+      </div>
+    </div>
   </div>
-  <!-- /.container -->
+</section>
