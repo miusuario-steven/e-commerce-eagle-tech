@@ -1,28 +1,37 @@
-<nav class="fixed top-0 left-0 w-full bg-gray-900/90 backdrop-blur-md text-white z-50 shadow-md">
-  <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+<!-- 🌌 Header Admin Galáctico Glass Futurista -->
+<nav class="fixed top-0 left-0 w-full z-50 text-white">
+  <div
+    class="relative border border-violet-500/40 rounded-b-xl bg-white/10 backdrop-blur-lg ring-2 ring-violet-500/20 shadow-neon-violet transition-all duration-500 hover:ring-4">
 
-    <!-- Logo -->
-    <a [routerLink]="['/admin']" class="flex items-center space-x-2">
-      <img src="http://localhost:8085/image/logo-eagle.png" alt="Logo" class="h-10">
-      <span class="text-white font-bold text-lg">Eagle Admin</span>
-    </a>
+    <!-- 🌌 Fondo galáctico animado -->
+    <div class="absolute inset-0 bg-gradient-to-br from-galaxyStart via-galaxyMid to-galaxyEnd opacity-90 -z-10 bg-[length:400%_400%] animate-gradient rounded-b-xl"></div>
 
-    <!-- Botón móvil (hamburguesa) -->
-    <button (click)="toggleMenu()" class="sm:hidden focus:outline-none">
-      <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M4 6h16M4 12h16M4 18h16" />
-      </svg>
-    </button>
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
 
-    <!-- Menú -->
-    <div [ngClass]="{ 'hidden': !isMenuOpen }" class="absolute sm:static top-16 right-4 sm:top-auto sm:right-auto bg-gray-800 sm:bg-transparent rounded-lg sm:rounded-none shadow-lg sm:shadow-none sm:flex sm:items-center space-y-4 sm:space-y-0 sm:space-x-6 p-4 sm:p-0 text-sm">
-      <a routerLink="/admin/category" class="block hover:text-cyan-400 transition">Categorías</a>
-      <a routerLink="/admin/product" class="block hover:text-cyan-400 transition">Productos</a>
-      <a href="#" class="block hover:text-cyan-400 transition">Usuarios</a>
-      <a href="#" class="block hover:text-cyan-400 transition">Órdenes</a>
-      <a routerLink="/logout" class="block text-red-400 hover:text-red-500 transition">Salir</a>
+      <!-- 🚀 Logo -->
+      <a [routerLink]="['/admin']" class="flex items-center space-x-2 hover:opacity-90 transition">
+        <img src="http://localhost:8085/image/logo.png" alt="Logo" class="h-10 drop-shadow-md">
+      </a>
+
+      <!-- 📱 Botón hamburguesa (móvil) -->
+      <button (click)="toggleMenu()" class="sm:hidden focus:outline-none">
+        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+
+      <!-- 🧭 Menú -->
+      <div [ngClass]="{ 'hidden': !isMenuOpen }"
+        class="absolute sm:static top-16 right-4 sm:top-auto sm:right-auto bg-white/10 sm:bg-transparent rounded-xl sm:rounded-none shadow-xl sm:shadow-none sm:flex sm:items-center space-y-4 sm:space-y-0 sm:space-x-6 p-4 sm:p-0 text-sm backdrop-blur-md border border-white/10 sm:border-none">
+
+        <a routerLink="/admin/category" class="block hover:text-violet-300 transition font-semibold">Categorías</a>
+        <a routerLink="/admin/product" class="block hover:text-violet-300 transition font-semibold">Productos</a>
+        <a href="#" class="block hover:text-violet-300 transition font-semibold">Usuarios</a>
+        <a href="#" class="block hover:text-violet-300 transition font-semibold">Órdenes</a>
+        <a routerLink="/logout" class="block text-red-400 hover:text-red-500 transition font-semibold">Salir</a>
+      </div>
+
     </div>
-
   </div>
 </nav>

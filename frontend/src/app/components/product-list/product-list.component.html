@@ -1,69 +1,111 @@
 <app-header-admin></app-header-admin>
 
-<section class="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 px-4 py-10 text-white">
+<section class="min-h-screen bg-gradient-to-br from-galaxyStart via-galaxyMid to-galaxyEnd px-4 py-16 text-white">
   <div class="max-w-7xl mx-auto">
 
-    <!-- Encabezado -->
-    <div class="mb-6">
-      <h1 class="text-2xl sm:text-3xl font-bold mb-2">Eagle Tech Admin <span class="text-cyan-400">Productos</span></h1>
+    <!-- 🌠 Encabezado -->
+    <div class="mb-10">
+      <h1 class="text-3xl sm:text-4xl font-bold mb-2 drop-shadow-lg">
+        Eagle Tech Admin <span class="text-cyan-400">Productos</span>
+      </h1>
       <nav class="text-white/70 text-sm">
         <ol class="flex space-x-2">
-          <li><a routerLink="/" class="hover:underline text-cyan-300">Home</a></li>
+          <li><a routerLink="/" class="hover:text-cyan-300 underline">Inicio</a></li>
           <li>/</li>
-          <li>Ver Productos</li>
+          <li>Productos</li>
         </ol>
       </nav>
     </div>
 
-    <!-- Botón crear producto -->
-    <div class="mb-6">
+    <!-- 🛠 Botón de creación -->
+    <div class="mb-8 text-right">
       <button
         (click)="goToAddProductForm()"
-        class="bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-lg font-semibold transition"
+        class="bg-gradient-to-r from-cyan-500 to-cyan-600 hover:from-cyan-600 hover:to-cyan-700 text-white px-6 py-2 rounded-xl font-semibold shadow-md transition"
       >
-        Crear Producto
+        + Crear producto
       </button>
     </div>
 
-    <!-- Tabla de productos -->
-    <div class="overflow-x-auto bg-white/10 backdrop-blur-md rounded-xl shadow-lg">
-      <table class="min-w-full text-sm text-white">
-        <thead>
-          <tr class="bg-white/10 text-left text-white/80 border-b border-white/10">
-            <th class="py-3 px-4">Código</th>
-            <th class="py-3 px-4">Nombre</th>
-            <th class="py-3 px-4">Descripción</th>
-            <th class="py-3 px-4">Precio</th>
-            <th class="py-3 px-4">Editar</th>
-            <th class="py-3 px-4">Eliminar</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let product of products" class="border-b border-white/10 hover:bg-white/5">
-            <td class="py-2 px-4">{{ product.code }}</td>
-            <td class="py-2 px-4">{{ product.name }}</td>
-            <td class="py-2 px-4">{{ product.description }}</td>
-            <td class="py-2 px-4">${{ product.price }}</td>
-            <td class="py-2 px-4">
-              <button
-                [routerLink]="['/admin/product/update', product.id]"
-                class="bg-yellow-400 hover:bg-yellow-500 text-black px-3 py-1 rounded-md font-semibold"
-              >
-                Editar
-              </button>
-            </td>
-            <td class="py-2 px-4">
-              <button
-                (click)="deleteProductById(product.id)"
-                class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md font-semibold"
-              >
-                Eliminar
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+<!-- 📊 Tabla de productos con glassmorphism -->
+<div class="overflow-x-auto bg-white/10 backdrop-blur-xl rounded-2xl shadow-2xl shadow-black/20 border border-white/10">
+  <table class="min-w-full text-sm text-white table-auto hidden sm:table">
+    <thead>
+      <tr class="bg-white/10 text-left text-white/80 border-b border-white/10">
+        <th class="py-3 px-4">Código</th>
+        <th class="py-3 px-4">Nombre</th>
+        <th class="py-3 px-4">Descripción</th>
+        <th class="py-3 px-4">Precio</th>
+        <th class="py-3 px-4 text-center">Editar</th>
+        <th class="py-3 px-4 text-center">Eliminar</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let product of products"
+        class="border-b border-white/10 hover:bg-white/5 transition duration-200"
+      >
+        <td class="py-2 px-4">{{ product.code }}</td>
+        <td class="py-2 px-4">{{ product.name }}</td>
+        <td class="py-2 px-4">{{ product.description }}</td>
+        <td class="py-2 px-4">${{ product.price }}</td>
+        <td class="py-2 px-4 text-center">
+          <button
+            [routerLink]="['/admin/product/update', product.id]"
+            class="bg-yellow-400 hover:bg-yellow-500 text-black px-4 py-1 rounded-md font-semibold transition"
+          >
+            Editar
+          </button>
+        </td>
+        <td class="py-2 px-4 text-center">
+          <button
+            (click)="deleteProductById(product.id)"
+            class="bg-red-500 hover:bg-red-600 text-white px-4 py-1 rounded-md font-semibold transition"
+          >
+            Eliminar
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
+  <!-- 🔁 Versión móvil como tarjetas -->
+  <div class="sm:hidden space-y-4 p-4">
+    <div
+      *ngFor="let product of products"
+      class="bg-white/10 backdrop-blur-md rounded-xl shadow-md p-4 border border-white/10 space-y-2"
+    >
+      <div class="flex justify-between items-center">
+        <span class="font-bold text-cyan-300">Código:</span>
+        <span>{{ product.code }}</span>
+      </div>
+      <div class="flex justify-between items-center">
+        <span class="font-bold text-cyan-300">Nombre:</span>
+        <span>{{ product.name }}</span>
+      </div>
+      <div class="flex justify-between items-start">
+        <span class="font-bold text-cyan-300">Descripción:</span>
+        <span class="text-right">{{ product.description }}</span>
+      </div>
+      <div class="flex justify-between items-center">
+        <span class="font-bold text-cyan-300">Precio:</span>
+        <span>${{ product.price }}</span>
+      </div>
+      <div class="flex justify-end gap-2 pt-2">
+        <button
+          [routerLink]="['/admin/product/update', product.id]"
+          class="bg-yellow-400 hover:bg-yellow-500 text-black px-3 py-1 rounded-md text-sm font-semibold transition"
+        >
+          Editar
+        </button>
+        <button
+          (click)="deleteProductById(product.id)"
+          class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md text-sm font-semibold transition"
+        >
+          Eliminar
+        </button>
+      </div>
+    </div>
   </div>
-</section>
+</div>
+

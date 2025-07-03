@@ -1,10 +1,10 @@
-/* ✅ Todos los @import deben ir antes de cualquier regla */
+/* styles.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import 'ngx-toastr/toastr';
 
-/* ✅ Tus estilos personalizados después de los @import */
+/* 🌌 Fondo base animado y galáctico */
 body {
+  @apply min-h-screen bg-gradient-to-br from-galaxyStart via-galaxyMid to-galaxyEnd bg-[length:400%_400%] animate-gradient;
   padding-top: 64px;
 }

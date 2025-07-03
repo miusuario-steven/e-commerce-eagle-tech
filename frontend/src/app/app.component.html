@@ -1,6 +1,4 @@
-<!--<app-home></app-home>-->
-
-<!--<app-product-list></app-product-list>-->
-<app-header-user></app-header-user>
+<app-header-user *ngIf="!isAdminRoute"></app-header-user>
+<app-header-admin *ngIf="isAdminRoute"></app-header-admin>
 <router-outlet></router-outlet>
-
+<app-toast></app-toast>

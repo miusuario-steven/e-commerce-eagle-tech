@@ -3,49 +3,47 @@ import { ProductService } from '../../services/product.service';
 import { HeaderAdminComponent } from '../header-admin/header-admin.component';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Toast, ToastrService } from 'ngx-toastr';
 import { Category } from '../../common/category';
 import { CategoryService } from '../../services/category.service';
 import { CommonModule } from '@angular/common';
 import { SessionStorageService } from '../../services/session-storage.service';
+import { NotificationService } from '../../services/notification.service'; // ✅ NUEVO
 
 @Component({
   selector: 'app-product-add',
   standalone: true,
-  imports: [HeaderAdminComponent, FormsModule,CommonModule],
+  imports: [HeaderAdminComponent, FormsModule, CommonModule],
   templateUrl: './product-add.component.html',
   styleUrl: './product-add.component.css'
 })
-export class ProductAddComponent  implements OnInit{
-  
-  id: number =0;
+export class ProductAddComponent implements OnInit {
+  id: number = 0;
   name: string = '';
-  description : string = '';
+  description: string = '';
   price: number = 0;
-  urlImage: string = "";
-  userId : string ='1';
-  categoryId: string ='6';
-  user : number = 0;
+  urlImage: string = '';
+  userId: string = '1';
+  categoryId: string = '6';
+  user: number = 0;
 
-  selectFile! : File;
-
-  categories : Category [] = [];
+  selectFile!: File;
+  categories: Category[] = [];
 
   constructor(
-    private productService : ProductService,
-    private router:Router, 
-    private activatedRoute:ActivatedRoute,
-    private toastr: ToastrService,
-    private categoryService:CategoryService,
-    private sessionStorage : SessionStorageService
-  ){ }
+    private productService: ProductService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private categoryService: CategoryService,
+    private sessionStorage: SessionStorageService,
+    private notification: NotificationService // ✅ Sustituye a AppComponent
+  ) {}
 
   ngOnInit(): void {
     this.getProductById();
     this.getCategories();
     this.user = this.sessionStorage.getItem('token').id;
     this.userId = this.user.toString();
-   }
+  }
 
   onFileChange(event: Event) {
     const input = event.target as HTMLInputElement;
@@ -54,65 +52,59 @@ export class ProductAddComponent  implements OnInit{
     }
   }
 
-  addProduct(){
+  addProduct() {
+    if (!this.selectFile) {
+  this.notification.show('Debes seleccionar una imagen antes de continuar', 'info');
+  return;
+}
+
     const formData = new FormData();
     if (this.id !== 0) {
-      formData.append('id', this.id.toString()); // ✅ Solo si estás actualizando
-    }    
-    formData.append('name',this.name);
-    formData.append('description',this.description);
-    formData.append('price',this.price.toString());
-    formData.append('image',this.selectFile);
-    formData.append('urlImage',this.urlImage);
+      formData.append('id', this.id.toString());
+    }
+    formData.append('name', this.name);
+    formData.append('description', this.description);
+    formData.append('price', this.price.toString());
+    formData.append('image', this.selectFile);
+    formData.append('urlImage', this.urlImage);
     formData.append('userId', this.userId);
-    formData.append('categoryId',this.categoryId);
-    //console.log(formData.get('id'));
-    console.log(formData);
+    formData.append('categoryId', this.categoryId);
 
+    this.productService.createProduct(formData).subscribe(response => {
+      console.log('Producto agregado/actualizado con éxito', response);
 
-    this.productService.createProduct(formData).subscribe(
-      response => {
-      console.log('Producto agregado con éxito', response);
-      if(this.id==0){
-        this.toastr.success('Producto agregado con éxito', 'Productos');
-      }else{
-        this.toastr.success('Producto actualizado con éxito', 'Productos');
+      if (this.id === 0) {
+        this.notification.show('Producto agregado con éxito', 'success'); // ✅ toast success
+      } else {
+        this.notification.show('Producto actualizado con éxito', 'success'); // ✅ toast success
       }
+
       this.router.navigate(['admin/product']);
     });
   }
-    
-  getProductById(){
-    this.activatedRoute.params.subscribe(
-      prod =>{
-        const id = prod['id'];
-        if(id){
-          console.log('el valor de la variable id es : '+id);
-          this.productService.getProductById(id).subscribe(
-            data =>{
-              this.id = data.id;
-              this.name = data.name;
-              this.description = data.description;
-              this.urlImage = data.urlImage;
-              this.price = data.price;
-              this.userId = data.userId;
-              this.categoryId = data.categoryId;
-            }
-          );
-            
-        }
+
+  getProductById() {
+    this.activatedRoute.params.subscribe(prod => {
+      const id = prod['id'];
+      if (id) {
+        this.productService.getProductById(id).subscribe(data => {
+          this.id = data.id;
+          this.name = data.name;
+          this.description = data.description;
+          this.urlImage = data.urlImage;
+          this.price = data.price;
+          this.userId = data.userId;
+          this.categoryId = data.categoryId;
+        });
       }
-    );
+    });
   }
 
-  onFileSelected(event : any){
+  onFileSelected(event: any) {
     this.selectFile = event.target.files[0];
   }
 
-  getCategories(){
-    return this.categoryService.getCategoryList().subscribe(
-      data => this.categories = data
-    )
+  getCategories() {
+    return this.categoryService.getCategoryList().subscribe(data => this.categories = data);
   }
-
 }

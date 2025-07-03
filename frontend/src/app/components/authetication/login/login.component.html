@@ -1,7 +1,13 @@
 <app-header-user></app-header-user>
 
-<section class="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 flex items-center justify-center px-4 py-10">
-  <div class="w-full max-w-md bg-white/10 backdrop-blur-md rounded-2xl shadow-xl text-white p-8">
+<!-- 🌌 Fondo galáctico para login -->
+<section class="relative min-h-screen bg-gradient-to-br from-galaxyStart via-galaxyMid to-galaxyEnd bg-[length:400%_400%] animate-gradient flex items-center justify-center px-4 py-16 overflow-hidden">
+
+  <!-- 💫 Supernova animada -->
+  <div class="absolute w-[500px] h-[500px] bg-galaxyBurst opacity-10 rounded-full blur-3xl animate-spin-slow top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0"></div>
+
+  <!-- 💎 Tarjeta login -->
+  <div class="relative z-10 w-full max-w-md bg-white/10 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl text-white p-8 animate-fade-slide-up">
     <h2 class="text-2xl sm:text-3xl font-bold mb-6 text-center">Ingresar</h2>
 
     <form (ngSubmit)="login()" class="space-y-5">
@@ -16,7 +22,7 @@
           placeholder="Ingrese su email"
           required
           autocomplete="off"
-          class="w-full px-4 py-2 rounded-lg bg-white/20 backdrop-blur-sm text-white placeholder-white/70 border border-white/20 focus:outline-none focus:ring-2 focus:ring-cyan-400"
+          class="w-full px-4 py-2 rounded-lg bg-white/20 backdrop-blur text-white placeholder-white/70 border border-white/20 focus:outline-none focus:ring-2 focus:ring-cyan-400"
         />
       </div>
 
@@ -30,7 +36,7 @@
           name="password"
           placeholder="Ingrese su contraseña"
           required
-          class="w-full px-4 py-2 rounded-lg bg-white/20 backdrop-blur-sm text-white placeholder-white/70 border border-white/20 focus:outline-none focus:ring-2 focus:ring-cyan-400"
+          class="w-full px-4 py-2 rounded-lg bg-white/20 backdrop-blur text-white placeholder-white/70 border border-white/20 focus:outline-none focus:ring-2 focus:ring-cyan-400"
         />
       </div>
 
@@ -38,7 +44,7 @@
       <div class="text-center">
         <button
           type="submit"
-          class="w-full bg-cyan-500 hover:bg-cyan-600 text-white py-2 px-4 rounded-lg font-semibold transition"
+          class="w-full bg-cyan-500 hover:bg-cyan-600 hover:shadow-[0_0_15px_3px_#9333ea] text-white py-2 px-4 rounded-lg font-semibold transition shadow-md"
         >
           Ingresar
         </button>
@@ -47,7 +53,7 @@
 
     <!-- Enlace a registro -->
     <div class="text-center mt-6">
-      <a [routerLink]="['/user/register']" class="text-cyan-300 hover:underline">
+      <a [routerLink]="['/user/register']" class="text-cyan-300 hover:underline hover:text-cyan-400 transition">
         ¿No tienes cuenta? Regístrate
       </a>
     </div>

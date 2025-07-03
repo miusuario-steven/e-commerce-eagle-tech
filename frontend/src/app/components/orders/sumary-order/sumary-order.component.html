@@ -1,11 +1,11 @@
 <app-header-user></app-header-user>
 
-<section class="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 px-4 py-10 text-white">
+<section class="min-h-screen bg-gradient-to-br from-galaxyStart via-galaxyMid to-galaxyEnd px-4 py-12 text-white">
   <div class="max-w-7xl mx-auto">
 
-    <!-- Breadcrumb -->
-    <div class="mb-8">
-      <h1 class="text-2xl sm:text-3xl font-bold mb-2">Eagle Tech <span class="text-cyan-400">Resumen de la orden</span></h1>
+    <!-- 🧭 Breadcrumb -->
+    <div class="mb-10">
+      <h1 class="text-3xl sm:text-4xl font-bold mb-3 drop-shadow">Eagle Tech <span class="text-cyan-400">Resumen de la orden</span></h1>
       <nav class="text-white/70 text-sm">
         <ol class="flex space-x-2">
           <li><a routerLink="/" class="hover:underline text-cyan-300">Home</a></li>
@@ -15,42 +15,44 @@
       </nav>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-      
-      <!-- Datos de la orden y productos -->
-      <div class="lg:col-span-2 bg-white/10 backdrop-blur-md rounded-2xl shadow-xl p-6 space-y-6">
-        
-        <!-- Datos del cliente -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+      <!-- 📦 Detalles de la orden -->
+      <div class="lg:col-span-2 bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl p-6 space-y-6 border border-white/10">
+
+        <!-- 👤 Datos del cliente -->
         <div>
-          <h3 class="text-xl font-semibold mb-4">Datos de la orden</h3>
-          <p><strong>Nombre:</strong> {{ firstName }} {{ lastName }}</p>
-          <p><strong>Correo:</strong> {{ email }}</p>
-          <p><strong>Dirección:</strong> {{ address }}</p>
+          <h3 class="text-xl font-bold mb-4 text-cyan-300">Datos del cliente</h3>
+          <ul class="space-y-1 text-white/90 text-sm">
+            <li><strong>Nombre:</strong> {{ firstName }} {{ lastName }}</li>
+            <li><strong>Correo:</strong> {{ email }}</li>
+            <li><strong>Dirección:</strong> {{ address }}</li>
+          </ul>
         </div>
 
-        <!-- Tabla de productos -->
+        <!-- 🛒 Tabla de productos -->
         <div>
-          <h3 class="text-xl font-semibold mb-4 mt-6">Productos</h3>
-          <div class="overflow-x-auto">
-            <table class="w-full text-sm text-white/90">
+          <h3 class="text-xl font-bold mb-4 text-cyan-300">Productos en tu carrito</h3>
+          <div class="overflow-x-auto rounded-lg">
+            <table class="w-full text-sm text-white/90 border-separate border-spacing-y-2">
               <thead>
-                <tr class="bg-white/10 text-left">
+                <tr class="bg-white/10 text-left text-white/70 rounded-md">
                   <th class="py-2 px-3">Producto</th>
                   <th class="py-2 px-3">Precio</th>
                   <th class="py-2 px-3">Cantidad</th>
                   <th class="py-2 px-3">Total</th>
-                  <th class="py-2 px-3">Eliminar</th>
+                  <th class="py-2 px-3">Quitar</th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of items" class="border-b border-white/10">
+                <tr *ngFor="let item of items" class="bg-white/5 hover:bg-white/10 transition rounded-md">
                   <td class="py-2 px-3">{{ item.productName }}</td>
                   <td class="py-2 px-3">${{ item.price }}</td>
                   <td class="py-2 px-3">{{ item.quantity }}</td>
                   <td class="py-2 px-3">${{ item.getTotalPriceItem() }}</td>
                   <td class="py-2 px-3">
-                    <button (click)="deleteItemCart(item.productId)" class="text-red-400 hover:underline">
-                      Quitar
+                    <button (click)="deleteItemCart(item.productId)" class="text-red-400 hover:text-red-300 font-semibold transition">
+                      ✖
                     </button>
                   </td>
                 </tr>
@@ -60,17 +62,23 @@
         </div>
       </div>
 
-      <!-- Resumen y pago -->
-      <div class="bg-white/10 backdrop-blur-md rounded-2xl shadow-xl p-6 h-fit">
-        <h3 class="text-xl font-semibold mb-4">Resumen de orden</h3>
-        <p class="mb-4 text-lg"><strong>Total:</strong> ${{ totalCart }}</p>
+      <!-- 💳 Resumen y acción de pago -->
+      <div class="bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl border border-white/10 p-6 h-fit flex flex-col justify-between">
+        <div>
+          <h3 class="text-xl font-bold mb-4 text-cyan-300">Resumen de orden</h3>
+          <p class="text-lg mb-6 text-white/90">
+            <span class="font-semibold">Total a pagar:</span>
+            <span class="text-2xl font-bold text-green-400">${{ totalCart }}</span>
+          </p>
+        </div>
         <button
           (click)="generateOrder()"
-          class="w-full bg-cyan-500 hover:bg-cyan-600 text-white py-3 rounded-lg font-semibold transition"
+          class="w-full bg-gradient-to-r from-violet-600 to-cyan-500 hover:from-violet-700 hover:to-cyan-600 text-white py-3 rounded-full font-bold shadow-lg shadow-violet-400/40 hover:shadow-[0_0_25px_10px_rgba(207,93,207,0.4)] transition"
         >
-          Pagar con PayPal
+          💳 Pagar con PayPal
         </button>
       </div>
+
     </div>
 
   </div>

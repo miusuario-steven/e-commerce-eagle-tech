@@ -1,28 +1,35 @@
-<section class="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 to-gray-800 px-4">
-  <div class="bg-white/10 backdrop-blur-md text-white p-8 sm:p-12 rounded-2xl shadow-xl max-w-xl text-center
-              animate-fade-slide-up">
+<section class="min-h-screen flex items-center justify-center bg-gradient-to-br from-galaxyStart via-galaxyMid to-galaxyEnd px-4 py-16">
+  <div class="bg-white/10 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-2xl shadow-violet-500/20 text-white p-8 sm:p-12 max-w-xl text-center animate-fade-slide-up">
 
-    <!-- ✅ Ícono de éxito -->
-    <div class="text-green-400 text-6xl mb-4">
+    <!-- ✅ Ícono de éxito grande y llamativo -->
+    <div class="text-green-400 text-6xl sm:text-7xl mb-6 drop-shadow-lg animate-bounce">
       ✅
     </div>
 
-    <!-- ✅ Título -->
-    <h2 class="text-3xl sm:text-4xl font-bold mb-4">¡Pago completado!</h2>
+    <!-- 🎉 Título de éxito -->
+    <h2 class="text-3xl sm:text-4xl font-extrabold mb-4 drop-shadow-md">¡Pago exitoso!</h2>
 
-    <!-- ✅ Mensaje -->
-    <p class="text-white/80 text-lg mb-6">
-      Gracias por tu compra. Tu orden ha sido confirmada y está siendo procesada.
+    <!-- 🛍️ Mensaje de confirmación -->
+    <p class="text-white/80 text-lg mb-8">
+      Gracias por confiar en <span class="text-cyan-300 font-semibold">Eagle Tech</span>.
+      Tu orden ha sido confirmada y está en camino hacia ti.
     </p>
 
-    <!-- ✅ Botones -->
+    <!-- 🚀 Botones de navegación -->
     <div class="flex flex-col sm:flex-row justify-center gap-4">
-      <a routerLink="/" class="bg-cyan-500 hover:bg-cyan-600 px-6 py-3 rounded-xl font-semibold text-white transition">
-        Volver al inicio
+      <a
+        routerLink="/"
+        class="bg-gradient-to-r from-cyan-500 to-violet-600 hover:from-cyan-600 hover:to-violet-700 px-6 py-3 rounded-xl font-bold text-white shadow-md shadow-cyan-400/30 transition"
+      >
+        🏠 Volver al inicio
       </a>
-      <a routerLink="/user/orders" class="bg-white/20 hover:bg-white/30 px-6 py-3 rounded-xl font-semibold text-white transition">
-        Ver mis órdenes
+      <a
+        routerLink="/user/orders"
+        class="bg-white/20 hover:bg-white/30 px-6 py-3 rounded-xl font-semibold text-white transition shadow-inner"
+      >
+        📦 Ver mis órdenes
       </a>
     </div>
+
   </div>
 </section>

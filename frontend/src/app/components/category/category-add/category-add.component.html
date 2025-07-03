@@ -1,22 +1,27 @@
 <app-header-admin></app-header-admin>
 
-<section class="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 px-4 py-10 text-white">
-  <div class="max-w-3xl mx-auto">
+<!-- 🌌 Fondo galáctico para categoría -->
+<section class="relative min-h-screen bg-gradient-to-br from-galaxyStart via-galaxyMid to-galaxyEnd bg-[length:400%_400%] animate-gradient px-4 py-16 text-white overflow-hidden">
 
-    <!-- Encabezado -->
+  <!-- 💫 Glow animado supernova -->
+  <div class="absolute w-[500px] h-[500px] bg-galaxyBurst opacity-10 rounded-full blur-3xl animate-spin-slow top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0"></div>
+
+  <div class="relative z-10 max-w-3xl mx-auto">
+
+    <!-- 🧭 Breadcrumb + título -->
     <div class="mb-8">
       <h1 class="text-3xl font-bold mb-2">Crear Categoría</h1>
       <nav class="text-white/70 text-sm">
         <ol class="flex space-x-2">
-          <li><a routerLink="/admin/category" class="hover:text-cyan-400">Categorías</a></li>
+          <li><a routerLink="/admin/category" class="hover:text-cyan-300">Categorías</a></li>
           <li>/</li>
           <li>Crear</li>
         </ol>
       </nav>
     </div>
 
-    <!-- Formulario -->
-    <form (ngSubmit)="addCategory()" class="space-y-6 bg-white/10 backdrop-blur-md p-6 rounded-xl shadow-lg">
+    <!-- 📝 Formulario glassmorphism -->
+    <form (ngSubmit)="addCategory()" class="space-y-6 bg-white/10 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-8 animate-fade-slide-up">
       <input type="hidden" [(ngModel)]="id" name="id" />
 
       <!-- Campo nombre -->
@@ -31,7 +36,7 @@
           required
           minlength="3"
           autocomplete="off"
-          class="w-full px-4 py-2 bg-white/20 text-white placeholder-white/70 border border-white/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400"
+          class="w-full px-4 py-2 rounded-lg bg-white/20 text-white placeholder-white/70 border border-white/30 focus:outline-none focus:ring-2 focus:ring-cyan-400"
         />
       </div>
 
@@ -39,11 +44,12 @@
       <div class="text-left">
         <button
           type="submit"
-          class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-semibold transition"
+          class="bg-cyan-500 hover:bg-cyan-600 hover:shadow-[0_0_15px_3px_#9333ea] text-white px-6 py-3 rounded-lg font-semibold transition shadow-md"
         >
           Guardar categoría
         </button>
       </div>
     </form>
+
   </div>
 </section>

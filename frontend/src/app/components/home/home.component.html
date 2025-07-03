@@ -1,50 +1,73 @@
-<!-- Hero Principal - Glassmorphism -->
-<section class="min-h-[60vh] bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center px-4">
-  <div class="bg-white/10 backdrop-blur-md rounded-2xl shadow-xl shadow-black/30 p-6 sm:p-10 max-w-3xl text-center animate-fade-slide-up">
-    <h1 class="text-3xl sm:text-5xl font-bold text-white mb-4 drop-shadow-md">
-      Explora tecnología sin límites
+<!-- 🌌 Hero con llamado a la acción galáctico -->
+<section class="min-h-screen bg-gradient-to-b from-galaxyStart via-galaxyMid to-galaxyEnd flex items-center justify-center px-4 py-10">
+  <div class="bg-white/10 backdrop-blur-xl rounded-2xl shadow-2xl shadow-violet-500/20 p-8 sm:p-12 max-w-3xl text-center animate-fade-slide-up">
+
+    <h1 class="text-4xl sm:text-5xl font-extrabold text-white mb-6 drop-shadow-xl">
+      Potencia tu mundo con tecnología de otro nivel
     </h1>
+
     <p class="text-white/80 text-lg sm:text-xl mb-8">
-      Bienvenido a Eagle Tech, tu tienda de confianza en tecnología.
+      Bienvenido a <span class="text-cyan-300 font-semibold">Eagle Tech</span>, la tienda donde la innovación y el estilo se fusionan para darte lo mejor del universo tecnológico.
     </p>
+
     <a
       routerLink="/productos"
-      class="inline-block bg-white/20 hover:bg-white/30 transition-colors duration-300 text-white font-semibold px-6 py-3 rounded-xl shadow-lg backdrop-blur-sm"
+      class="inline-block px-8 py-3 bg-violet-600 hover:bg-violet-700 transition duration-300 text-white font-bold rounded-full shadow-lg shadow-violet-500/50 hover:shadow-[0_0_25px_10px_rgba(207,93,207,0.4)] backdrop-blur"
     >
-      Ver productos
+      Explorar productos
     </a>
+
   </div>
 </section>
 
-<!-- Productos destacados - Glassmorphism Grid -->
-<section class="px-4 py-10 bg-gray-900">
-  <h2 class="text-white text-2xl sm:text-3xl font-bold mb-6 text-center">Productos destacados</h2>
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-    <div *ngFor="let p of products" class="bg-white/10 backdrop-blur-lg rounded-xl shadow-lg p-4 flex flex-col items-center text-white hover:scale-[1.02] transition duration-300">
-      <img [src]="p.urlImage" alt="{{p.name}}" class="w-full h-48 object-contain rounded-md mb-4" />
+
+<!-- Productos destacados - Tema Galáctico -->
+<section class="px-4 py-16 bg-gradient-to-b from-galaxyMid via-galaxyEnd to-black">
+  <h2 class="text-white text-3xl font-bold mb-10 text-center drop-shadow-lg">Productos destacados</h2>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+    <div
+      *ngFor="let p of products"
+      class="bg-white/10 backdrop-blur-lg rounded-xl shadow-lg shadow-black/40 p-5 flex flex-col items-center text-white transition duration-300 hover:scale-[1.02] hover:shadow-[0_0_20px_5px_rgba(207,93,207,0.8)]"
+    >
+      <img
+        [src]="p.urlImage"
+        alt="{{p.name}}"
+        class="w-full h-48 object-contain rounded-md mb-4 drop-shadow-md"
+      />
       <h3 class="text-lg font-semibold mb-1 text-center">{{ p.name }}</h3>
       <div class="text-cyan-300 font-bold text-xl mb-3">${{ p.price }}</div>
+
       <a
         [routerLink]="['/cart/detailproduct', p.id]"
-        class="mt-auto bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg backdrop-blur text-white font-medium transition"
+        class="mt-auto bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg backdrop-blur-sm text-white font-medium transition"
       >
         Ver producto
       </a>
     </div>
+
   </div>
 </section>
 
-<!-- Categorías destacadas -->
-<section class="px-4 py-12 bg-gray-900">
-  <h2 class="text-white text-2xl sm:text-3xl font-bold mb-6 text-center">Explora por categorías</h2>
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-    <div *ngFor="let c of categories" class="bg-white/10 backdrop-blur-md p-6 rounded-xl shadow-lg text-white text-center hover:scale-[1.02] transition">
-      <!-- Si tienes imagen o ícono, puedes agregarlo aquí -->
+
+<!-- 🌌 Categorías destacadas - Galaxia -->
+<section class="px-4 py-16 bg-gradient-to-b from-galaxyMid via-galaxyEnd to-black">
+  <h2 class="text-white text-3xl font-bold mb-10 text-center drop-shadow-lg">
+    Explora por categorías
+  </h2>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+    <div
+      *ngFor="let c of categories"
+      class="bg-white/10 backdrop-blur-md p-6 rounded-xl shadow-lg shadow-black/40 text-white text-center transition duration-300 hover:scale-[1.02] hover:shadow-[0_0_20px_5px_rgba(207,93,207,0.8)]"
+    >
+      <!-- Icono opcional -->
       <!-- <img [src]="c.iconUrl" alt="{{c.name}}" class="w-16 h-16 mx-auto mb-4" /> -->
+
       <h3 class="text-xl font-semibold mb-2">{{ c.name }}</h3>
       <a
         [routerLink]="['/productos/categoria', c.id]"
-        class="inline-block mt-2 bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg backdrop-blur-sm transition"
+        class="inline-block mt-4 bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg backdrop-blur-sm transition"
       >
         Ver productos
       </a>
@@ -52,13 +75,19 @@
   </div>
 </section>
 
-<!-- Beneficios / Garantías -->
-<section class="px-4 py-16 bg-gray-900">
-  <h2 class="text-white text-2xl sm:text-3xl font-bold mb-10 text-center">¿Por qué comprar en Eagle Tech?</h2>
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-    
+
+<!-- 🚀 Beneficios / Garantías - Estilo Galáctico -->
+<section class="px-4 py-20 bg-gradient-to-b from-galaxyStart via-galaxyMid to-black">
+  <h2 class="text-white text-3xl font-bold mb-12 text-center drop-shadow-md">
+    ¿Por qué comprar en Eagle Tech?
+  </h2>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+
     <!-- Envíos rápidos -->
-    <div class="bg-white/10 backdrop-blur-lg rounded-xl shadow-md p-6 text-white text-center">
+    <div
+      class="bg-white/10 backdrop-blur-lg rounded-xl shadow-md shadow-black/30 p-6 text-white text-center transition hover:scale-[1.02] hover:shadow-[0_0_20px_5px_rgba(207,93,207,0.8)]"
+    >
       <svg class="w-12 h-12 mx-auto mb-4 text-cyan-300" fill="none" stroke="currentColor" stroke-width="1.5"
         viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round"
@@ -68,51 +97,70 @@
       <p class="text-white/80 text-sm">Recibe tu producto en tiempo récord, estés donde estés.</p>
     </div>
 
-    <!-- Soporte técnico -->
-    <div class="bg-white/10 backdrop-blur-lg rounded-xl shadow-md p-6 text-white text-center">
-      <svg class="w-12 h-12 mx-auto mb-4 text-cyan-300" fill="none" stroke="currentColor" stroke-width="1.5"
+    <!-- Pago seguro -->
+    <div
+      class="bg-white/10 backdrop-blur-lg rounded-xl shadow-md shadow-black/30 p-6 text-white text-center transition hover:scale-[1.02] hover:shadow-[0_0_20px_5px_rgba(207,93,207,0.8)]"
+    >
+      <svg class="w-12 h-12 mx-auto mb-4 text-emerald-300" fill="none" stroke="currentColor" stroke-width="1.5"
         viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round"
-          d="M12 4.354v15.292m0 0l-3.75-3.75m3.75 3.75l3.75-3.75" />
+          d="M12 11c0-1.105.895-2 2-2s2 .895 2 2-.895 2-2 2-2-.895-2-2z" />
+        <path stroke-linecap="round" stroke-linejoin="round"
+          d="M16 7v2a2 2 0 01-2 2H8.414a1 1 0 00-.707.293l-4 4a1 1 0 001.414 1.414l4-4A1 1 0 019 12.414V12h5a4 4 0 004-4V7h-2z" />
       </svg>
-      <h3 class="text-lg font-semibold mb-2">Soporte garantizado</h3>
-      <p class="text-white/80 text-sm">¿Tienes dudas? Nuestro equipo está listo para ayudarte.</p>
+      <h3 class="text-lg font-semibold mb-2">Pago seguro</h3>
+      <p class="text-white/80 text-sm">Tus datos y transacciones están cifrados y protegidos.</p>
     </div>
 
-    <!-- Pagos seguros -->
-    <div class="bg-white/10 backdrop-blur-lg rounded-xl shadow-md p-6 text-white text-center">
-      <svg class="w-12 h-12 mx-auto mb-4 text-cyan-300" fill="none" stroke="currentColor" stroke-width="1.5"
+    <!-- Soporte 24/7 -->
+    <div
+      class="bg-white/10 backdrop-blur-lg rounded-xl shadow-md shadow-black/30 p-6 text-white text-center transition hover:scale-[1.02] hover:shadow-[0_0_20px_5px_rgba(207,93,207,0.8)]"
+    >
+      <svg class="w-12 h-12 mx-auto mb-4 text-yellow-300" fill="none" stroke="currentColor" stroke-width="1.5"
         viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round"
-          d="M12 15.75v1.5m0-4.5h.008v.008H12V12zm0-3.75A3.75 3.75 0 1015.75 12 3.75 3.75 0 0012 8.25z" />
+          d="M18.364 5.636a9 9 0 00-12.728 0 9 9 0 000 12.728 9 9 0 0012.728 0 9 9 0 000-12.728zM12 9v4m0 4h.01" />
       </svg>
-      <h3 class="text-lg font-semibold mb-2">Pagos 100% seguros</h3>
-      <p class="text-white/80 text-sm">Compra tranquilo, protegemos tus datos con PayPal y más.</p>
+      <h3 class="text-lg font-semibold mb-2">Soporte 24/7</h3>
+      <p class="text-white/80 text-sm">Siempre disponibles para ayudarte, sin importar la hora.</p>
     </div>
 
-    <!-- Garantía -->
-    <div class="bg-white/10 backdrop-blur-lg rounded-xl shadow-md p-6 text-white text-center">
-      <svg class="w-12 h-12 mx-auto mb-4 text-cyan-300" fill="none" stroke="currentColor" stroke-width="1.5"
+    <!-- Garantía extendida -->
+    <div
+      class="bg-white/10 backdrop-blur-lg rounded-xl shadow-md shadow-black/30 p-6 text-white text-center transition hover:scale-[1.02] hover:shadow-[0_0_20px_5px_rgba(207,93,207,0.8)]"
+    >
+      <svg class="w-12 h-12 mx-auto mb-4 text-violet-400" fill="none" stroke="currentColor" stroke-width="1.5"
         viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round"
-          d="M12 6.75l3.5 3.5-1.5 1.5 3.5 3.5-7.5 7.5-3.5-3.5 1.5-1.5-3.5-3.5L12 6.75z" />
+          d="M5.121 17.804A9.961 9.961 0 0112 15c2.243 0 4.314.738 5.879 1.98A10.005 10.005 0 0112 21a10.005 10.005 0 01-6.879-3.196z" />
+        <path stroke-linecap="round" stroke-linejoin="round"
+          d="M12 12a3 3 0 100-6 3 3 0 000 6z" />
       </svg>
-      <h3 class="text-lg font-semibold mb-2">Garantía de satisfacción</h3>
-      <p class="text-white/80 text-sm">Si no estás satisfecho, puedes solicitar reembolso o cambio.</p>
+      <h3 class="text-lg font-semibold mb-2">Garantía extendida</h3>
+      <p class="text-white/80 text-sm">Todos tus productos están respaldados por garantía real.</p>
     </div>
 
   </div>
 </section>
-<!-- Testimonios -->
-<section class="px-4 py-16 bg-gray-900">
-  <h2 class="text-white text-2xl sm:text-3xl font-bold mb-10 text-center">Lo que dicen nuestros clientes</h2>
+
+
+<!-- 🌠 Testimonios - Opiniones reales con estilo galáctico -->
+<section class="px-4 py-20 bg-gradient-to-b from-galaxyStart via-galaxyMid to-black">
+  <h2 class="text-white text-3xl font-bold mb-12 text-center drop-shadow-md">
+    Lo que dicen nuestros clientes
+  </h2>
+
   <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-    
+
     <!-- Testimonio 1 -->
-    <div class="bg-white/10 backdrop-blur-md rounded-xl shadow-lg p-6 text-white">
-      <p class="text-white/90 italic mb-4">"Compré una laptop gamer y llegó en solo 2 días. Excelente servicio y atención. Muy recomendado."</p>
+    <div
+      class="bg-white/10 backdrop-blur-lg rounded-2xl shadow-lg shadow-black/30 p-6 text-white hover:scale-[1.02] hover:shadow-[0_0_20px_5px_rgba(207,93,207,0.5)] transition duration-300"
+    >
+      <p class="text-white/90 italic mb-4">
+        "Compré una laptop gamer y llegó en solo 2 días. Excelente servicio y atención. Muy recomendado."
+      </p>
       <div class="flex items-center gap-4">
-        <img src="https://i.pravatar.cc/100?img=32" alt="Cliente" class="w-10 h-10 rounded-full">
+        <img src="https://i.pravatar.cc/100?img=32" alt="Cliente" class="w-10 h-10 rounded-full border border-white/30 shadow-sm" />
         <div>
           <h4 class="font-semibold">Laura Gutiérrez</h4>
           <p class="text-white/60 text-sm">Cali, Colombia</p>
@@ -121,10 +169,14 @@
     </div>
 
     <!-- Testimonio 2 -->
-    <div class="bg-white/10 backdrop-blur-md rounded-xl shadow-lg p-6 text-white">
-      <p class="text-white/90 italic mb-4">"Tenía dudas antes de comprar, pero me atendieron por WhatsApp de inmediato. Volveré a comprar sin dudarlo."</p>
+    <div
+      class="bg-white/10 backdrop-blur-lg rounded-2xl shadow-lg shadow-black/30 p-6 text-white hover:scale-[1.02] hover:shadow-[0_0_20px_5px_rgba(207,93,207,0.5)] transition duration-300"
+    >
+      <p class="text-white/90 italic mb-4">
+        "Tenía dudas antes de comprar, pero me atendieron por WhatsApp de inmediato. Volveré a comprar sin dudarlo."
+      </p>
       <div class="flex items-center gap-4">
-        <img src="https://i.pravatar.cc/100?img=15" alt="Cliente" class="w-10 h-10 rounded-full">
+        <img src="https://i.pravatar.cc/100?img=15" alt="Cliente" class="w-10 h-10 rounded-full border border-white/30 shadow-sm" />
         <div>
           <h4 class="font-semibold">Carlos Ramírez</h4>
           <p class="text-white/60 text-sm">Bogotá, Colombia</p>
@@ -132,78 +184,81 @@
       </div>
     </div>
 
-    <!-- Puedes duplicar más testimonios aquí si deseas -->
-
-  </div>
-</section>
-<!-- Call to Action final -->
-<section class="px-4 py-16 bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
-  <div class="bg-white/10 backdrop-blur-md p-8 rounded-2xl shadow-xl text-center max-w-xl text-white">
-    <h2 class="text-2xl sm:text-3xl font-bold mb-4">¿Listo para comprar en Eagle Tech?</h2>
-    <p class="text-white/80 mb-6">Crea tu cuenta y empieza a disfrutar de ofertas exclusivas, envíos rápidos y productos de última tecnología.</p>
-    <div class="flex flex-col sm:flex-row justify-center gap-4">
-      <a
-        routerLink="/registro"
-        class="bg-cyan-500 hover:bg-cyan-600 text-white px-6 py-3 rounded-xl font-semibold transition"
-      >
-        Crear cuenta
-      </a>
-      <a
-        routerLink="/productos"
-        class="bg-white/20 hover:bg-white/30 text-white px-6 py-3 rounded-xl font-semibold transition"
-      >
-        Ver productos
-      </a>
-    </div>
   </div>
 </section>
 
 
-<!-- Footer moderno - Glassmorphism -->
-<footer class="bg-gray-800 backdrop-blur-md text-white py-10 mt-10">
-  <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-    
-    <!-- Marca -->
-    <div>
-      <h3 class="text-2xl font-bold mb-2">Eagle Tech</h3>
-      <p class="text-white/70 text-sm">Tecnología de alto vuelo para todos. 🦅</p>
-    </div>
+<!-- 🚀 Llamado a la acción galáctico -->
+<section class="px-4 py-20 bg-gradient-to-b from-black via-galaxyMid to-galaxyEnd text-white text-center">
+  <div class="max-w-3xl mx-auto bg-white/10 backdrop-blur-lg rounded-2xl shadow-xl shadow-violet-500/20 p-10 animate-fade-slide-up">
 
-    <!-- Navegación -->
-    <div>
-      <h4 class="text-lg font-semibold mb-2">Enlaces</h4>
-      <ul class="space-y-1 text-white/80 text-sm">
-        <li><a routerLink="/productos" class="hover:text-white">Productos</a></li>
-        <li><a routerLink="/registro" class="hover:text-white">Registrarse</a></li>
-        <li><a routerLink="/login" class="hover:text-white">Iniciar sesión</a></li>
-      </ul>
-    </div>
+    <h2 class="text-3xl sm:text-4xl font-bold mb-4 text-violet-200 drop-shadow-md">
+      ¿Listo para llevar tu experiencia tecnológica al siguiente nivel?
+    </h2>
 
-    <!-- Soporte -->
-    <div>
-      <h4 class="text-lg font-semibold mb-2">Soporte</h4>
-      <ul class="space-y-1 text-white/80 text-sm">
-        <li><a href="#" class="hover:text-white">Preguntas frecuentes</a></li>
-        <li><a href="#" class="hover:text-white">Política de privacidad</a></li>
-        <li><a href="#" class="hover:text-white">Términos y condiciones</a></li>
-      </ul>
-    </div>
+    <p class="text-white/80 text-lg sm:text-xl mb-8">
+      En Eagle Tech te conectamos con la innovación. Explora productos únicos, haz tu pedido hoy y descubre por qué somos la tienda del futuro.
+    </p>
 
-    <!-- Contacto / Redes -->
-    <div>
-      <h4 class="text-lg font-semibold mb-2">Contáctanos</h4>
-      <ul class="space-y-1 text-white/80 text-sm">
-        <li>Email: contacto&#64;eagletech.com</li>
-        <li>WhatsApp: +57 320 123 4567</li>
-        <li class="flex space-x-3 mt-2">
-          <a href="#" aria-label="Facebook" class="hover:text-white text-lg">📘</a>
-          <a href="#" aria-label="Instagram" class="hover:text-white text-lg">📸</a>
-          <a href="#" aria-label="Twitter" class="hover:text-white text-lg">🐦</a>
-        </li>
-      </ul>
-    </div>
+    <a
+      routerLink="/productos"
+      class="inline-block px-8 py-3 bg-violet-600 hover:bg-violet-700 transition text-white font-bold rounded-full shadow-lg shadow-violet-500/50 hover:shadow-[0_0_25px_10px_rgba(207,93,207,0.4)] backdrop-blur"
+    >
+      Comprar ahora
+    </a>
   </div>
-  <div class="text-center text-white/60 text-sm mt-10 border-t border-white/10 pt-4">
+</section>
+
+
+<!-- 🌌 Footer galáctico - Glassmorphism -->
+<footer class="bg-gradient-to-br from-galaxyStart via-galaxyMid to-black text-white/90 py-12 px-4 backdrop-blur-md border-t border-white/10">
+  <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 text-sm">
+
+    <!-- 🦅 Marca -->
+    <div>
+      <h3 class="text-2xl font-bold mb-3 text-white drop-shadow-sm">Eagle Tech</h3>
+      <p class="text-white/70">Tecnología de alto vuelo para todos. 🦅</p>
+    </div>
+
+    <!-- 🔗 Enlaces -->
+    <div>
+      <h4 class="text-lg font-semibold mb-3 text-cyan-300">Enlaces</h4>
+      <ul class="space-y-1">
+        <li><a routerLink="/productos" class="hover:text-white transition">Productos</a></li>
+        <li><a routerLink="/registro" class="hover:text-white transition">Registrarse</a></li>
+        <li><a routerLink="/login" class="hover:text-white transition">Iniciar sesión</a></li>
+      </ul>
+    </div>
+
+    <!-- 🛟 Soporte -->
+    <div>
+      <h4 class="text-lg font-semibold mb-3 text-cyan-300">Soporte</h4>
+      <ul class="space-y-1">
+        <li><a href="#" class="hover:text-white transition">Preguntas frecuentes</a></li>
+        <li><a href="#" class="hover:text-white transition">Política de privacidad</a></li>
+        <li><a href="#" class="hover:text-white transition">Términos y condiciones</a></li>
+      </ul>
+    </div>
+
+    <!-- 📬 Contacto y redes -->
+    <div>
+      <h4 class="text-lg font-semibold mb-3 text-cyan-300">Contáctanos</h4>
+      <ul class="space-y-1">
+        <li>Email: <span class="text-white/80">contacto&#64;eagletech.com</span></li>
+        <li>WhatsApp: <span class="text-white/80">+57 320 123 4567</span></li>
+      </ul>
+      <div class="flex space-x-4 mt-4">
+        <a href="#" aria-label="Facebook" class="hover:text-[#3b5998] text-xl transition">📘</a>
+        <a href="#" aria-label="Instagram" class="hover:text-[#e1306c] text-xl transition">📸</a>
+        <a href="#" aria-label="Twitter" class="hover:text-[#1da1f2] text-xl transition">🐦</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 🔒 Línea inferior -->
+  <div class="text-center text-white/50 text-xs mt-12 border-t border-white/10 pt-4">
     &copy; 2025 Eagle Tech. Todos los derechos reservados.
   </div>
 </footer>
+

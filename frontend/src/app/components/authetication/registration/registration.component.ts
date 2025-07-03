@@ -5,7 +5,7 @@ import { AuthenticationService } from '../../../services/authentication.service'
 import { Router } from '@angular/router';
 import { User } from '../../../common/user';
 import { FormsModule } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
+import { NotificationService } from '../../../services/notification.service'; // ✅ nuevo
 
 @Component({
   selector: 'app-registration',
@@ -15,7 +15,6 @@ import { ToastrService } from 'ngx-toastr';
   styleUrl: './registration.component.css'
 })
 export class RegistrationComponent implements OnInit {
-
   username: string = '';
   name: string = '';
   surname: string = '';
@@ -28,18 +27,16 @@ export class RegistrationComponent implements OnInit {
   constructor(
     private authentication: AuthenticationService,
     private router: Router,
-    private toastr: ToastrService
-  ) { }
+    private notification: NotificationService // ✅ inyectamos el servicio
+  ) {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   register() {
-    // Borra el token anterior
     localStorage.removeItem('token');
 
-    // Crear instancia de la clase User (con id en null)
     const user = new User(
-      null,                // id generado por el backend
+      null,
       this.username,
       this.name,
       this.surname,
@@ -54,13 +51,12 @@ export class RegistrationComponent implements OnInit {
 
     this.authentication.register(user).subscribe({
       next: res => {
-        this.toastr.success('Usuario registrado con éxito', 'Usuario');
-        console.log(res);
+        this.notification.show('Usuario registrado con éxito', 'success'); // ✅ notificación correcta
         this.router.navigate(['user/login']);
       },
       error: err => {
         console.error('Error en registro:', err);
-        this.toastr.error('Error al registrar el usuario', 'Error');
+        this.notification.show('Error al registrar el usuario', 'error'); // ✅ notificación de error
       }
     });
   }
