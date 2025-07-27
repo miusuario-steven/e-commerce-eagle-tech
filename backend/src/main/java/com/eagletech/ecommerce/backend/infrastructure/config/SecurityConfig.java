@@ -1,14 +1,16 @@
 package com.eagletech.ecommerce.backend.infrastructure.config;
 
-import java.util.Arrays;
-import java.util.List;
-
+import com.eagletech.ecommerce.backend.infrastructure.jwt.JWTAuthorizationFilter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -16,9 +18,9 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import com.eagletech.ecommerce.backend.infrastructure.jwt.JWTAuthorizationFilter;
+import java.util.List;
 
-import lombok.extern.slf4j.Slf4j;
+import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
@@ -39,19 +41,19 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-            .csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/v1/security/register").permitAll()
-                .requestMatchers("/api/v1/security/login").permitAll()
-                .requestMatchers("/api/v1/payments/success").permitAll()
-                .requestMatchers("/image/**", "/api/v1/home/**").permitAll()
-                .requestMatchers("/api/v1/admin/categories/**").hasRole("ADMIN")
-                .requestMatchers("/api/v1/admin/products/**").hasRole("ADMIN")
-                .requestMatchers("/api/v1/orders/**", "/api/v1/payments/**").hasRole("USER")
-                .anyRequest().authenticated()
-            )
-            .addFilterAfter(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
+                .cors(withDefaults()) // Usa el bean corsConfigurationSource()
+                .csrf(AbstractHttpConfigurer::disable)
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Permite todas las pre-flight requests
+                        .requestMatchers("/api/v1/security/**").permitAll()
+                        .requestMatchers("/api/v1/payments/success", "/api/v1/payments/cancel").permitAll()
+                        .requestMatchers("/image/**", "/api/v1/home/**", "/api/v1/categories/**", "/api/v1/products/search/**").permitAll()
+                        .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/api/v1/orders/**", "/api/v1/payments/**").hasAnyRole("USER", "ADMIN")
+                        .anyRequest().authenticated()
+                )
+                .addFilterAfter(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return httpSecurity.build();
     }
@@ -59,12 +61,10 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        
-        // 👇 SOLO permitir localhost:4200 para Angular
         configuration.setAllowedOrigins(List.of("http://localhost:4200"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(List.of("*"));
-        configuration.setAllowCredentials(true); // Necesario si usas cookies, sesiones, auth, etc.
+        configuration.setAllowedMethods(List.of("*")); // Permitir TODOS los métodos (GET, POST, etc.)
+        configuration.setAllowedHeaders(List.of("*")); // Permitir TODOS los encabezados
+        configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);

@@ -10,57 +10,81 @@
   <div class="relative z-10 w-full max-w-xl bg-white/10 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl text-white p-8 animate-fade-slide-up">
     <h2 class="text-2xl sm:text-3xl font-bold mb-6 text-center">Registro cósmico</h2>
 
-    <form (ngSubmit)="register()" class="space-y-5">
+    <form [formGroup]="registrationForm" (ngSubmit)="register()" class="space-y-5">
       <!-- Nombre -->
       <div>
-        <label for="name" class="block mb-1 text-sm font-medium">Nombre</label>
+        <label for="firstName" class="block mb-1 text-sm font-medium">Nombre</label>
         <input
-          [(ngModel)]="name"
+          formControlName="firstName"
           type="text"
-          id="name"
-          name="name"
+          id="firstName"
+          name="firstName"
           placeholder="Ingrese su nombre"
           autocomplete="off"
-          required
           class="w-full px-4 py-2 rounded-lg bg-white/20 text-white placeholder-white/70 border border-white/20 focus:outline-none focus:ring-2 focus:ring-cyan-400"
         />
+        <div *ngIf="f['firstName'].invalid && (f['firstName'].dirty || f['firstName'].touched)" class="text-red-400 text-sm mt-1">
+          <div *ngIf="f['firstName'].errors?.['required']">El nombre es requerido.</div>
+        </div>
       </div>
 
       <!-- Apellido -->
       <div>
-        <label for="surname" class="block mb-1 text-sm font-medium">Apellido</label>
+        <label for="lastName" class="block mb-1 text-sm font-medium">Apellido</label>
         <input
-          [(ngModel)]="surname"
+          formControlName="lastName"
           type="text"
-          id="surname"
-          name="surname"
+          id="lastName"
+          name="lastName"
           placeholder="Ingrese su apellido"
           autocomplete="off"
-          required
           class="w-full px-4 py-2 rounded-lg bg-white/20 text-white placeholder-white/70 border border-white/20 focus:outline-none focus:ring-2 focus:ring-cyan-400"
         />
+        <div *ngIf="f['lastName'].invalid && (f['lastName'].dirty || f['lastName'].touched)" class="text-red-400 text-sm mt-1">
+          <div *ngIf="f['lastName'].errors?.['required']">El apellido es requerido.</div>
+        </div>
       </div>
 
       <!-- Email -->
       <div>
         <label for="email" class="block mb-1 text-sm font-medium">Email</label>
         <input
-          [(ngModel)]="email"
+          formControlName="email"
           type="email"
           id="email"
           name="email"
           placeholder="Ingrese su email"
           autocomplete="off"
-          required
           class="w-full px-4 py-2 rounded-lg bg-white/20 text-white placeholder-white/70 border border-white/20 focus:outline-none focus:ring-2 focus:ring-cyan-400"
         />
+        <div *ngIf="f['email'].invalid && (f['email'].dirty || f['email'].touched)" class="text-red-400 text-sm mt-1">
+          <div *ngIf="f['email'].errors?.['required']">El email es requerido.</div>
+          <div *ngIf="f['email'].errors?.['email']">El email no es válido.</div>
+        </div>
+      </div>
+
+      <!-- Nombre de Usuario -->
+      <div>
+        <label for="username" class="block mb-1 text-sm font-medium">Nombre de Usuario</label>
+        <input
+          formControlName="username"
+          type="text"
+          id="username"
+          name="username"
+          placeholder="Ingrese su nombre de usuario"
+          autocomplete="off"
+          class="w-full px-4 py-2 rounded-lg bg-white/20 text-white placeholder-white/70 border border-white/20 focus:outline-none focus:ring-2 focus:ring-cyan-400"
+        />
+        <div *ngIf="f['username'].invalid && (f['username'].dirty || f['username'].touched)" class="text-red-400 text-sm mt-1">
+          <div *ngIf="f['username'].errors?.['required']">El nombre de usuario es requerido.</div>
+        </div>
       </div>
 
       <!-- Dirección -->
       <div>
         <label for="address" class="block mb-1 text-sm font-medium">Dirección</label>
         <input
-          [(ngModel)]="address"
+          formControlName="address"
           type="text"
           id="address"
           name="address"
@@ -68,13 +92,16 @@
           autocomplete="off"
           class="w-full px-4 py-2 rounded-lg bg-white/20 text-white placeholder-white/70 border border-white/20 focus:outline-none focus:ring-2 focus:ring-cyan-400"
         />
+        <div *ngIf="f['address'].invalid && (f['address'].dirty || f['address'].touched)" class="text-red-400 text-sm mt-1">
+          <div *ngIf="f['address'].errors?.['required']">La dirección es requerida.</div>
+        </div>
       </div>
 
       <!-- Teléfono -->
       <div>
         <label for="cellphone" class="block mb-1 text-sm font-medium">Teléfono</label>
         <input
-          [(ngModel)]="cellphone"
+          formControlName="cellphone"
           type="text"
           id="cellphone"
           name="cellphone"
@@ -82,27 +109,34 @@
           autocomplete="off"
           class="w-full px-4 py-2 rounded-lg bg-white/20 text-white placeholder-white/70 border border-white/20 focus:outline-none focus:ring-2 focus:ring-cyan-400"
         />
+        <div *ngIf="f['cellphone'].invalid && (f['cellphone'].dirty || f['cellphone'].touched)" class="text-red-400 text-sm mt-1">
+          <div *ngIf="f['cellphone'].errors?.['required']">El teléfono es requerido.</div>
+        </div>
       </div>
 
       <!-- Contraseña -->
       <div>
         <label for="password" class="block mb-1 text-sm font-medium">Contraseña</label>
         <input
-          [(ngModel)]="password"
+          formControlName="password"
           type="password"
           id="password"
           name="password"
           placeholder="Ingrese su contraseña"
           autocomplete="off"
-          required
           class="w-full px-4 py-2 rounded-lg bg-white/20 text-white placeholder-white/70 border border-white/20 focus:outline-none focus:ring-2 focus:ring-cyan-400"
         />
+        <div *ngIf="f['password'].invalid && (f['password'].dirty || f['password'].touched)" class="text-red-400 text-sm mt-1">
+          <div *ngIf="f['password'].errors?.['required']">La contraseña es requerida.</div>
+          <div *ngIf="f['password'].errors?.['minlength']">La contraseña debe tener al menos 6 caracteres.</div>
+        </div>
       </div>
 
       <!-- Botón -->
       <div class="text-center">
         <button
           type="submit"
+          [disabled]="registrationForm.invalid"
           class="w-full bg-cyan-500 hover:bg-cyan-600 text-white py-2 px-4 rounded-lg font-semibold transition shadow-md shadow-cyan-900/50">
           Guardar
         </button>

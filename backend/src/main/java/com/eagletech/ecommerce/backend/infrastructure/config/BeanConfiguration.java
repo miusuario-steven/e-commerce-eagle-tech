@@ -1,45 +1,53 @@
 package com.eagletech.ecommerce.backend.infrastructure.config;
 
+import com.eagletech.ecommerce.backend.domain.port.ICategoryRepository;
+import com.eagletech.ecommerce.backend.domain.port.IUserRepository;
+import com.eagletech.ecommerce.backend.usecases.*;
+import com.paypal.base.rest.APIContext;
+import com.paypal.base.rest.PayPalRESTException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import com.eagletech.ecommerce.backend.infrastructure.mapper.IOrderMapper;
-import com.eagletech.ecommerce.backend.application.CategoryService;
-import com.eagletech.ecommerce.backend.application.OrderService;
-import com.eagletech.ecommerce.backend.application.ProductService;
-import com.eagletech.ecommerce.backend.application.RegistrationService;
-import com.eagletech.ecommerce.backend.application.UploadFile;
-import com.eagletech.ecommerce.backend.application.UserService;
-import com.eagletech.ecommerce.backend.domain.port.ICategoryRepository;
-import com.eagletech.ecommerce.backend.domain.port.IOrderRepository;
-import com.eagletech.ecommerce.backend.domain.port.IProductRepository;
-import com.eagletech.ecommerce.backend.domain.port.IUserRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
-
 public class BeanConfiguration {
+
+    @Value("${paypal.clientId}")
+    private String clientId;
+    @Value("${paypal.clientSecret}")
+    private String clientSecret;
+    @Value("${paypal.mode}")
+    private String mode;
+
     @Bean
-    public UserService userService(IUserRepository iUserRepository){
-        return new UserService(iUserRepository);
+    public APIContext apiContext() throws PayPalRESTException {
+        APIContext apiContext = new APIContext(clientId, clientSecret, mode);
+        return apiContext;
     }
+
     @Bean
-    public CategoryService categoryService(ICategoryRepository iCategoryRepository){
-        return new CategoryService(iCategoryRepository);  
+    public ManageUserUseCase manageUserUseCase(IUserRepository iUserRepository){
+        return new ManageUserUseCase(iUserRepository);
     }
+
     @Bean
-    public ProductService productService(IProductRepository iProductRepository,UploadFile uploadFile){
-        return new ProductService(iProductRepository, uploadFile);
+    public ManageCategoryUseCase manageCategoryUseCase(ICategoryRepository iCategoryRepository){
+        return new ManageCategoryUseCase(iCategoryRepository);
     }
+
+    
+
+    // Se elimina la creación manual de ManageOrderUseCase, ahora es un @Service.
+
     @Bean
-    public OrderService orderService(IOrderRepository IOrderRepository, IOrderMapper orderMapper){
-        return new OrderService(IOrderRepository, orderMapper);
+    public ImageStorageService imageStorageService(){
+        return new ImageStorageService();
     }
+
     @Bean
-    public UploadFile uploadFile(){
-        return new UploadFile();
-    }
-    @Bean
-    public RegistrationService registrationService(IUserRepository iUserRepository){
-        return new RegistrationService(iUserRepository);
+    public RegisterUserUseCase registerUserUseCase(IUserRepository iUserRepository, BCryptPasswordEncoder passwordEncoder){
+        return new RegisterUserUseCase(iUserRepository, passwordEncoder);
     }
 
 }

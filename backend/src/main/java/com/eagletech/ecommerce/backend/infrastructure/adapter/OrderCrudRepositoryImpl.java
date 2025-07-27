@@ -1,5 +1,7 @@
 package com.eagletech.ecommerce.backend.infrastructure.adapter;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import com.eagletech.ecommerce.backend.domain.model.Order;
@@ -40,26 +42,23 @@ public class OrderCrudRepositoryImpl implements IOrderRepository {
     }
 
     @Override
-    public Iterable<Order> findAll() {
-        return iOrderMapper.toOrderList(iOrderCrudRepository.findAll());
+    public Page<Order> findAll(Pageable pageable) {
+        return iOrderCrudRepository.findAllWithUser(pageable).map(iOrderMapper::toOrder);
     }
 
     @Override
-    public Iterable<Order> findByUserId(Integer userId) {
+    public Page<Order> findByUserId(Integer userId, Pageable pageable) {
         UserEntity userEntity = new UserEntity();
         userEntity.setId(userId); 
-        return iOrderMapper.toOrderList(iOrderCrudRepository.findByUserEntity(userEntity));
+        Page<OrderEntity> orderEntitiesPage = iOrderCrudRepository.findByUserEntityWithProducts(userEntity, pageable);
+        return orderEntitiesPage.map(iOrderMapper::toOrder);
     }
 
     @Override
     public void updateStateById(Integer id, String state) {
-        if (OrderState.CANCELED.name().equals(state)) {
-            iOrderCrudRepository.updateStateById(id, OrderState.CANCELED);
-        } else if (OrderState.CONFIRMED.name().equals(state)) {
-            iOrderCrudRepository.updateStateById(id, OrderState.CONFIRMED);
-        } else {
-            throw new IllegalArgumentException("Estado no válido: " + state);
-        }
+        OrderState orderStateEnum = OrderState.valueOf(state);
+        iOrderCrudRepository.updateStateById(id, orderStateEnum);
     }
 
 }
+

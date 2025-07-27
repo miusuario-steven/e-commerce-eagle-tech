@@ -1,4 +1,3 @@
-<app-header-user *ngIf="!isAdminRoute"></app-header-user>
-<app-header-admin *ngIf="isAdminRoute"></app-header-admin>
+<app-header-user *ngIf="!(isAdmin$ | async)"></app-header-user>
+<app-header-admin *ngIf="isAdmin$ | async"></app-header-admin>
 <router-outlet></router-outlet>
-<app-toast></app-toast>

@@ -8,7 +8,7 @@ import org.mapstruct.Mappings;
 import com.eagletech.ecommerce.backend.domain.model.Order;
 import com.eagletech.ecommerce.backend.infrastructure.entity.OrderEntity;
 
-@Mapper(componentModel = "spring",uses = {IOrderProductMapper.class})
+@Mapper(uses = {IOrderProductMapper.class, IUserMapper.class})
 public interface IOrderMapper {
     @Mappings(
         {
@@ -16,7 +16,8 @@ public interface IOrderMapper {
             @Mapping(source = "dateCreated", target = "dateCreated"),
             @Mapping(source = "orderProducts", target = "orderProducts"),
             @Mapping(source = "orderState", target = "orderState"),
-            @Mapping(source = "userEntity.id", target = "userId"),
+            @Mapping(source = "total", target = "total"),
+            @Mapping(source = "userEntity", target = "user"),
         }
     )
 
@@ -24,6 +25,7 @@ public interface IOrderMapper {
     Iterable<Order> toOrderList(Iterable<OrderEntity> orderEntities);  
     
     @InheritInverseConfiguration
+    @Mapping(target = "userEntity", source = "user")
     OrderEntity toOrderEntity(Order order);
 
 }

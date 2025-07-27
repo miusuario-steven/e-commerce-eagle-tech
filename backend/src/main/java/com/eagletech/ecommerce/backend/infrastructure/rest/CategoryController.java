@@ -1,50 +1,55 @@
 package com.eagletech.ecommerce.backend.infrastructure.rest;
 
+import com.eagletech.ecommerce.backend.domain.model.Category;
+import com.eagletech.ecommerce.backend.usecases.ManageCategoryUseCase;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.eagletech.ecommerce.backend.application.CategoryService;
-import com.eagletech.ecommerce.backend.domain.model.Category;
-
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/admin/categories")
-@Slf4j  
+@Slf4j
 @CrossOrigin("http://localhost:4200")
 public class CategoryController {
-    private final CategoryService categoryService;
+    private final ManageCategoryUseCase manageCategoryUseCase;
 
-    public CategoryController(CategoryService categoryService) {
-        this.categoryService = categoryService;
+    public CategoryController(ManageCategoryUseCase manageCategoryUseCase) {
+        this.manageCategoryUseCase = manageCategoryUseCase;
     }
 
     @PostMapping
-    public ResponseEntity<Category> save(@RequestBody Category category){
-        return new ResponseEntity<>(categoryService.save(category), HttpStatus.CREATED);
+    public ResponseEntity<Category> save(@RequestBody Category category) {
+        return new ResponseEntity<>(manageCategoryUseCase.saveCategory(category), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Category> update(@PathVariable Integer id, @RequestBody Category category) {
+        return ResponseEntity.ok(manageCategoryUseCase.updateCategory(id, category));
     }
 
     @GetMapping
-    public ResponseEntity<Iterable<Category>> findAll(){
-        return ResponseEntity.ok(categoryService.findAll()); 
+    public ResponseEntity<Page<Category>> findAll(
+            @PageableDefault(size = 10, page = 0) Pageable pageable,
+            @RequestParam(required = false) String name) {
+        if (name != null && !name.isEmpty()) {
+            return ResponseEntity.ok(manageCategoryUseCase.searchCategories(name, pageable));
+        } else {
+            return ResponseEntity.ok(manageCategoryUseCase.getAllCategories(pageable));
+        }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Category> findById(@PathVariable Integer id){
-        return ResponseEntity.ok(categoryService.findById(id)); 
+    public ResponseEntity<Category> findById(@PathVariable Integer id) {
+        return ResponseEntity.ok(manageCategoryUseCase.getCategoryById(id));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> deleteById(@PathVariable Integer id){
-        categoryService.deleteById(id);
+    public ResponseEntity<HttpStatus> deleteById(@PathVariable Integer id) {
+        manageCategoryUseCase.deleteCategoryById(id);
         return ResponseEntity.ok().build();
     }
 }

@@ -27,85 +27,106 @@
       </button>
     </div>
 
-<!-- 📊 Tabla de productos con glassmorphism -->
-<div class="overflow-x-auto bg-white/10 backdrop-blur-xl rounded-2xl shadow-2xl shadow-black/20 border border-white/10">
-  <table class="min-w-full text-sm text-white table-auto hidden sm:table">
-    <thead>
-      <tr class="bg-white/10 text-left text-white/80 border-b border-white/10">
-        <th class="py-3 px-4">Código</th>
-        <th class="py-3 px-4">Nombre</th>
-        <th class="py-3 px-4">Descripción</th>
-        <th class="py-3 px-4">Precio</th>
-        <th class="py-3 px-4 text-center">Editar</th>
-        <th class="py-3 px-4 text-center">Eliminar</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        *ngFor="let product of products"
-        class="border-b border-white/10 hover:bg-white/5 transition duration-200"
-      >
-        <td class="py-2 px-4">{{ product.code }}</td>
-        <td class="py-2 px-4">{{ product.name }}</td>
-        <td class="py-2 px-4">{{ product.description }}</td>
-        <td class="py-2 px-4">${{ product.price }}</td>
-        <td class="py-2 px-4 text-center">
-          <button
-            [routerLink]="['/admin/product/update', product.id]"
-            class="bg-yellow-400 hover:bg-yellow-500 text-black px-4 py-1 rounded-md font-semibold transition"
-          >
-            Editar
-          </button>
-        </td>
-        <td class="py-2 px-4 text-center">
-          <button
-            (click)="deleteProductById(product.id)"
-            class="bg-red-500 hover:bg-red-600 text-white px-4 py-1 rounded-md font-semibold transition"
-          >
-            Eliminar
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+    <!-- 📊 Contenedor principal con estado de carga -->
+    <div class="relative bg-white/10 backdrop-blur-xl rounded-2xl shadow-2xl shadow-black/20 border border-white/10">
+      <!-- ⏳ Indicador de carga -->
+      <div *ngIf="isLoading" class="absolute inset-0 bg-black/50 flex items-center justify-center rounded-2xl z-10">
+        <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-cyan-400"></div>
+      </div>
 
-  <!-- 🔁 Versión móvil como tarjetas -->
-  <div class="sm:hidden space-y-4 p-4">
-    <div
-      *ngFor="let product of products"
-      class="bg-white/10 backdrop-blur-md rounded-xl shadow-md p-4 border border-white/10 space-y-2"
-    >
-      <div class="flex justify-between items-center">
-        <span class="font-bold text-cyan-300">Código:</span>
-        <span>{{ product.code }}</span>
+      <!-- Mensaje de no hay productos -->
+      <div *ngIf="!isLoading && products.length === 0" class="text-center py-16">
+        <p class="text-xl text-white/70">No hay productos para mostrar.</p>
       </div>
-      <div class="flex justify-between items-center">
-        <span class="font-bold text-cyan-300">Nombre:</span>
-        <span>{{ product.name }}</span>
+
+      <div [class.blur-sm]="isLoading">
+        <!-- Tabla de productos (visible en sm y superior) -->
+        <div class="overflow-x-auto hidden sm:block">
+          <table class="min-w-full text-sm text-white table-auto">
+            <thead>
+              <tr class="bg-white/10 text-left text-white/80 border-b border-white/10">
+                <th class="py-3 px-4">Código</th>
+                <th class="py-3 px-4">Nombre</th>
+                <th class="py-3 px-4">Descripción</th>
+                <th class="py-3 px-4">Precio</th>
+                <th class="py-3 px-4 text-center">Editar</th>
+                <th class="py-3 px-4 text-center">Eliminar</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let product of products" class="border-b border-white/10 hover:bg-white/5 transition duration-200">
+                <td class="py-2 px-4">{{ product.code }}</td>
+                <td class="py-2 px-4">{{ product.name }}</td>
+                <td class="py-2 px-4">{{ product.description }}</td>
+                <td class="py-2 px-4">${{ product.price }}</td>
+                <td class="py-2 px-4 text-center">
+                  <button [routerLink]="['/admin/product/update', product.id]" class="bg-yellow-400 hover:bg-yellow-500 text-black px-4 py-1 rounded-md font-semibold transition">
+                    Editar
+                  </button>
+                </td>
+                <td class="py-2 px-4 text-center">
+                  <button (click)="deleteProductById(product.id)" class="bg-red-500 hover:bg-red-600 text-white px-4 py-1 rounded-md font-semibold transition">
+                    Eliminar
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Tarjetas de productos (visible en móvil) -->
+        <div class="sm:hidden space-y-4 p-4">
+          <div *ngFor="let product of products" class="bg-white/10 backdrop-blur-md rounded-xl shadow-md p-4 border border-white/10 space-y-2">
+            <div class="flex justify-between items-center">
+              <span class="font-bold text-cyan-300">Código:</span>
+              <span>{{ product.code }}</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="font-bold text-cyan-300">Nombre:</span>
+              <span>{{ product.name }}</span>
+            </div>
+            <div class="flex justify-between items-start">
+              <span class="font-bold text-cyan-300">Descripción:</span>
+              <span class="text-right">{{ product.description }}</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="font-bold text-cyan-300">Precio:</span>
+              <span>${{ product.price }}</span>
+            </div>
+            <div class="flex justify-end gap-2 pt-2">
+              <button [routerLink]="['/admin/product/update', product.id]" class="bg-yellow-400 hover:bg-yellow-500 text-black px-3 py-1 rounded-md text-sm font-semibold transition">
+                Editar
+              </button>
+              <button (click)="deleteProductById(product.id)" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md text-sm font-semibold transition">
+                Eliminar
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="flex justify-between items-start">
-        <span class="font-bold text-cyan-300">Descripción:</span>
-        <span class="text-right">{{ product.description }}</span>
-      </div>
-      <div class="flex justify-between items-center">
-        <span class="font-bold text-cyan-300">Precio:</span>
-        <span>${{ product.price }}</span>
-      </div>
-      <div class="flex justify-end gap-2 pt-2">
-        <button
-          [routerLink]="['/admin/product/update', product.id]"
-          class="bg-yellow-400 hover:bg-yellow-500 text-black px-3 py-1 rounded-md text-sm font-semibold transition"
-        >
-          Editar
+
+      <!-- 📄 Paginación -->
+      <div *ngIf="!isLoading && totalPages > 1" class="flex justify-between items-center p-4 border-t border-white/10">
+        <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 0" class="px-4 py-2 bg-white/10 rounded-md hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed">
+          Anterior
         </button>
-        <button
-          (click)="deleteProductById(product.id)"
-          class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md text-sm font-semibold transition"
-        >
-          Eliminar
+        <div class="flex items-center space-x-2">
+          <ng-container *ngFor="let pageNum of getPageNumbers()">
+            <button (click)="onPageChange(pageNum)" 
+                    [ngClass]="{
+                      'bg-cyan-500': currentPage === pageNum, 
+                      'bg-white/10': currentPage !== pageNum
+                    }" 
+                    class="px-4 py-2 rounded-md hover:bg-white/20">
+              {{ pageNum + 1 }}
+            </button>
+          </ng-container>
+        </div>
+        <button (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalPages - 1" class="px-4 py-2 bg-white/10 rounded-md hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed">
+          Siguiente
         </button>
       </div>
     </div>
   </div>
-</div>
+</section>
 

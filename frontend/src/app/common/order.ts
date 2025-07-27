@@ -1,20 +1,28 @@
 import { OrderProduct } from "./order-product";
 import { OrderState } from "./order-state";
+import { User } from "./user";
 
 export class Order {
-    constructor(
-        public id:number|null,
-        public dateCreated:Date,
-        public orderProducts:OrderProduct [],
-        public userId:number,
-        public orderState:OrderState,
-    ){}
+    id: number | null;
+    dateCreated: Date;
+    orderProducts: OrderProduct[];
+    user: User; // Reemplazado userId por el objeto User completo
+    orderState: OrderState;
+    total: number;
 
-    getTotal(){
-        let total =0;
-        for(const orderProduct of this.orderProducts){
-            total += orderProduct.price * orderProduct.quantity;
-            console.log('Total: '+total);
-        }
+    constructor(
+        id: number | null,
+        dateCreated: Date,
+        orderProducts: OrderProduct[],
+        user: User,
+        orderState: OrderState,
+        total: number
+    ) {
+        this.id = id;
+        this.dateCreated = dateCreated;
+        this.orderProducts = orderProducts;
+        this.user = user;
+        this.orderState = orderState;
+        this.total = total;
     }
 }

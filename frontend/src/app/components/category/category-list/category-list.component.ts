@@ -1,53 +1,84 @@
 import { Component, OnInit } from '@angular/core';
-import { Category } from '../../../common/category';
 import { CategoryService } from '../../../services/category.service';
+import { Category } from '../../../common/category';
+import { NotificationService } from '../../../services/notification.service';
+import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HeaderAdminComponent } from '../../header-admin/header-admin.component';
-import { RouterModule } from '@angular/router';
-import Swal from 'sweetalert2';
+import { CategoryResponse } from '../../../common/category-response';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-category-list',
   standalone: true,
-  imports: [CommonModule, HeaderAdminComponent, RouterModule],
+  imports: [CommonModule, RouterModule, HeaderAdminComponent, FormsModule],
   templateUrl: './category-list.component.html',
-  styleUrl: './category-list.component.css'
+  styleUrls: ['./category-list.component.css']
 })
 export class CategoryListComponent implements OnInit {
   categories: Category[] = [];
+  pageNumber: number = 0;
+  pageSize: number = 10;
+  totalElements: number = 0;
+  totalPages: number = 0;
+  searchTerm: string = '';
 
-  constructor(private categoryService: CategoryService) {}
+  constructor(
+    private categoryService: CategoryService,
+    private notificationService: NotificationService
+  ) {}
 
   ngOnInit(): void {
-    this.listCategories();
+    this.loadCategories();
   }
 
-  listCategories() {
-    this.categoryService.getCategoryList().subscribe(data => this.categories = data);
-  }
-
-  deleteCategoryById(id: number) {
-    console.log('id de la categoria antes de eliminar:' + id);
-
-    Swal.fire({
-      title: "¿Quieres eliminar la categoría?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Sí, eliminar",
-      cancelButtonText: "Cancelar"
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.categoryService.deleteCategoryById(id).subscribe(() => {
-          this.listCategories();
-          Swal.fire({
-            title: "Categorías",
-            text: "Categoría eliminada correctamente.",
-            icon: "success"
-          });
-        });
+  loadCategories(): void {
+    this.categoryService.getCategoryList(this.pageNumber, this.pageSize, this.searchTerm).subscribe({
+      next: (data: CategoryResponse) => {
+        this.categories = data.content;
+        this.pageNumber = data.number;
+        this.pageSize = data.size;
+        this.totalElements = data.totalElements;
+        this.totalPages = data.totalPages;
+      },
+      error: (err) => {
+        this.notificationService.showError('Error', 'No se pudieron cargar las categorías.');
+        console.error(err);
       }
     });
+  }
+
+  deleteCategory(id: number): void {
+    this.notificationService.confirmDelete('¿Estás seguro de eliminar esta categoría?')
+      .then((result) => {
+        if (result.isConfirmed) {
+          this.categoryService.deleteCategoryById(id).subscribe({ 
+            next: () => {
+              this.notificationService.showSuccess('Eliminada', 'La categoría ha sido eliminada.');
+              this.loadCategories(); // Recargar la lista
+            },
+            error: (err) => {
+              this.notificationService.showError('Error', 'No se pudo eliminar la categoría.');
+              console.error(err);
+            }
+          });
+        }
+      });
+  }
+
+  goToPage(page: number): void {
+    this.pageNumber = page;
+    this.loadCategories();
+  }
+
+  updatePageSize(event: Event): void {
+    this.pageSize = +(event.target as HTMLSelectElement).value;
+    this.pageNumber = 0; // Reset to first page when page size changes
+    this.loadCategories();
+  }
+
+  doSearch(): void {
+    this.pageNumber = 0; // Reset to first page on new search
+    this.loadCategories();
   }
 }

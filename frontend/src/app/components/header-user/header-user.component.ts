@@ -1,14 +1,27 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { SessionStorageService } from '../../services/session-storage.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-header-user',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, CommonModule],
   templateUrl: './header-user.component.html',
-  styleUrl: './header-user.component.css'
+  styleUrls: ['./header-user.component.css']
 })
-export class HeaderUserComponent {
+export class HeaderUserComponent implements OnInit {
+  isLoggedIn = false;
+  
+  constructor(private sessionStorage: SessionStorageService) {}
 
+  ngOnInit(): void {
+    this.checkLoginStatus();
+  }
+
+  checkLoginStatus(): void {
+    const token = this.sessionStorage.getItem('token');
+    this.isLoggedIn = !!token;
+  }
 }
  

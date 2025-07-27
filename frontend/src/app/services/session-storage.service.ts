@@ -1,26 +1,56 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SessionStorageService {
+  private isLoggedIn$ = new BehaviorSubject<boolean>(this.hasToken());
 
-  constructor() { }
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) { }
 
-  setItem(key: string, value: any) {
-    sessionStorage.setItem(key, JSON.stringify(value)); 
+  private hasToken(): boolean {
+    if (isPlatformBrowser(this.platformId)) {
+      return !!sessionStorage.getItem('token');
+    }
+    return false;
   }
 
-  getItem(key: string) {
-    const item = sessionStorage.getItem(key);
-    return item ? JSON.parse(item) : null;
+  watchLoggedIn(): Observable<boolean> {
+    return this.isLoggedIn$.asObservable();
+  }
+
+  setItem(key: string, value: any) {
+    if (isPlatformBrowser(this.platformId)) {
+      sessionStorage.setItem(key, JSON.stringify(value));
+      if (key === 'token') {
+        this.isLoggedIn$.next(true);
+      }
+    }
+  }
+
+  getItem(key: string): any {
+    if (isPlatformBrowser(this.platformId)) {
+      const item = sessionStorage.getItem(key);
+      return item ? JSON.parse(item) : null;
+    }
+    return null;
   }
 
   removeItem(key: string) {
-    sessionStorage.removeItem(key);
+    if (isPlatformBrowser(this.platformId)) {
+      sessionStorage.removeItem(key);
+      if (key === 'token') {
+        this.isLoggedIn$.next(false);
+      }
+    }
   }
 
   clear() {
-    sessionStorage.clear();
+    if (isPlatformBrowser(this.platformId)) {
+      sessionStorage.clear();
+      this.isLoggedIn$.next(false);
+    }
   }
 }

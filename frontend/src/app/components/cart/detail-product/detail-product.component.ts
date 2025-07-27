@@ -51,17 +51,14 @@ export class DetailProductComponent implements OnInit {
 addCart(id: number) {
   // ✅ Validación para límite de unidades
   if (this.quantity > 4) {
-    this.notification.show('Solo puedes añadir hasta 4 unidades por producto', 'warning');
+    this.notification.showInfo('Solo puedes añadir hasta 4 unidades por producto', 'warning');
     return;
   }
 
   const item = new ItemCart(id, this.name, this.quantity, this.price);
   this.cartService.addItemCart(item);
 
-  console.log('Item añadido:', item);
-  console.log('Total carrito:', this.cartService.totalCart());
-
-  this.notification.show('Producto añadido al carrito de compras', 'success');
+  this.notification.showSuccess('Producto añadido al carrito de compras', '');
 }
 
 }

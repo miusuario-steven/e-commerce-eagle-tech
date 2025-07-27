@@ -1,45 +1,70 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { HeaderUserComponent } from '../../header-user/header-user.component';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationService } from '../../../services/authentication.service';
-import { Userdto } from '../../../common/userdto';
 import { SessionStorageService } from '../../../services/session-storage.service';
 import { Router, RouterModule } from '@angular/router';
+import { NotificationService } from '../../../services/notification.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { catchError, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterModule, CommonModule, HeaderUserComponent, FormsModule],
+  imports: [RouterModule, CommonModule, HeaderUserComponent, ReactiveFormsModule],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'] // Cambiado de styleUrl a styleUrls
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  username: string = '';
-  password: string = '';
+  loginForm: FormGroup;
+
+  constructor(
+    private fb: FormBuilder,
+    private authenticationService: AuthenticationService,
+    private sessionStorage: SessionStorageService,
+    private router: Router,
+    private notificationService: NotificationService
+  ) {
+    this.loginForm = this.fb.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required]
+    });
+  }
 
   ngOnInit(): void {}
 
-  constructor(
-    private authentication: AuthenticationService,
-    private sessionStorage: SessionStorageService,
-    private router: Router
-  ) {}
+  login(): void {
+    if (this.loginForm.invalid) {
+      this.notificationService.showInfo('Formulario inválido', 'Por favor, ingresa tu usuario y contraseña.');
+      return;
+    }
 
-  login() {
-    const userDto = new Userdto(this.username, this.password);
-    this.authentication.login(userDto).subscribe(
-      token => {
-        console.log(token);
-        this.sessionStorage.setItem('token', token);
-        if (token.type == 'ADMIN') {
-          this.router.navigate(['/admin']);
-          this.router.navigate(['/admin/product']);
-        } else {
-          this.router.navigate(['/']);
+    const { username, password } = this.loginForm.value;
+
+    this.authenticationService.login({ username, password }).pipe(
+      catchError((error: HttpErrorResponse) => {
+        let errorMessage = 'Ocurrió un error inesperado. Inténtalo de nuevo.';
+        if (error.status === 401) {
+          errorMessage = 'Credenciales inválidas. Por favor, verifica tu usuario y contraseña.';
+        } else if (error.error && error.error.message) {
+          errorMessage = error.error.message;
         }
+        this.notificationService.showError('Error de inicio de sesión', errorMessage);
+        return throwError(() => new Error(errorMessage));
+      })
+    ).subscribe(token => {
+      this.sessionStorage.setItem('token', token);
+      this.notificationService.showSuccess('Inicio de sesión exitoso', 'Bienvenido de nuevo!');
+
+      if (token.type === 'ADMIN') {
+        this.router.navigate(['/admin/product']);
+      } else {
+        this.router.navigate(['/']);
       }
-    );
-    console.log(userDto);
+    });
   }
+
+  get f() { return this.loginForm.controls; }
 }
+

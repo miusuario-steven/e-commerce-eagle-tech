@@ -13,13 +13,17 @@ public class Order {
     private LocalDateTime dateCreated;
     private List<OrderProduct> orderProducts;
     private OrderState orderState;
-    private Integer userId;
+    private User user;
+    private Double total; // Campo para el total calculado
 
     public Order() {
         orderProducts = new ArrayList<>();
     }
+
+    // Este método es útil para calcular el total sobre la marcha si es necesario, lo mantenemos.
     public BigDecimal getTotalOrderPrice(){
-        return this.orderProducts.stream().map(ordenProduct -> ordenProduct.getTotalItem() ).reduce(BigDecimal.ZERO,BigDecimal::add);
+        return this.orderProducts.stream()
+                .map(OrderProduct::getTotalItem)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
-    
 }

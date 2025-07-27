@@ -1,45 +1,34 @@
 package com.eagletech.ecommerce.backend.infrastructure.config;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import lombok.Data;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
-import com.paypal.base.rest.APIContext;
-
-@Configuration
-@ConfigurationProperties(prefix = "paypal")
+@Component
+@Data
 public class PaypalConfig {
 
-    private String clientId;
-    private String clientSecret;
-    private String mode;
+    @Value("${paypal.redirect.base-url}")
+    private String baseUrl;
 
-    @Bean
-    public APIContext apiContext() {
-        return new APIContext(clientId, clientSecret, mode);
+    @Value("${paypal.redirect.success-path}")
+    private String successPath;
+
+    @Value("${paypal.redirect.cancel-path}")
+    private String cancelPath;
+
+    @Value("${paypal.redirect.error-path}")
+    private String errorPath;
+
+    public String getSuccessUrl() {
+        return baseUrl + successPath;
     }
 
-    public String getClientId() {
-        return clientId;
+    public String getCancelUrl() {
+        return baseUrl + cancelPath;
     }
 
-    public void setClientId(String clientId) {
-        this.clientId = clientId;
-    }
-
-    public String getClientSecret() {
-        return clientSecret;
-    }
-
-    public void setClientSecret(String clientSecret) {
-        this.clientSecret = clientSecret;
-    }
-
-    public String getMode() {
-        return mode;
-    }
-
-    public void setMode(String mode) {
-        this.mode = mode;
+    public String getErrorUrl() {
+        return baseUrl + errorPath;
     }
 }

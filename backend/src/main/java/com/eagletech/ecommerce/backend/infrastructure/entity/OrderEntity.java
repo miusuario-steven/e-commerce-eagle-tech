@@ -33,6 +33,8 @@ public class OrderEntity {
     @Enumerated(value = EnumType.STRING)
     private OrderState orderState;
 
+    private Double total;
+
     @ManyToOne
     private UserEntity userEntity;
     

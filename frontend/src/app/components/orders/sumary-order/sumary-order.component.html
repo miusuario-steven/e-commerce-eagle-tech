@@ -23,11 +23,14 @@
         <!-- 👤 Datos del cliente -->
         <div>
           <h3 class="text-xl font-bold mb-4 text-cyan-300">Datos del cliente</h3>
-          <ul class="space-y-1 text-white/90 text-sm">
-            <li><strong>Nombre:</strong> {{ firstName }} {{ lastName }}</li>
-            <li><strong>Correo:</strong> {{ email }}</li>
-            <li><strong>Dirección:</strong> {{ address }}</li>
+          <ul *ngIf="user" class="space-y-1 text-white/90 text-sm">
+            <li><strong>Nombre:</strong> {{ user.firstName }} {{ user.lastName }}</li>
+            <li><strong>Correo:</strong> {{ user.email }}</li>
+            <li><strong>Dirección:</strong> {{ user.address }}</li>
           </ul>
+          <div *ngIf="!user" class="text-sm text-white/60">
+            Cargando datos del cliente...
+          </div>
         </div>
 
         <!-- 🛒 Tabla de productos -->
@@ -45,7 +48,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of items" class="bg-white/5 hover:bg-white/10 transition rounded-md">
+                <tr *ngFor="let item of (items$ | async)" class="bg-white/5 hover:bg-white/10 transition rounded-md">
                   <td class="py-2 px-3">{{ item.productName }}</td>
                   <td class="py-2 px-3">${{ item.price }}</td>
                   <td class="py-2 px-3">{{ item.quantity }}</td>
@@ -68,7 +71,7 @@
           <h3 class="text-xl font-bold mb-4 text-cyan-300">Resumen de orden</h3>
           <p class="text-lg mb-6 text-white/90">
             <span class="font-semibold">Total a pagar:</span>
-            <span class="text-2xl font-bold text-green-400">${{ totalCart }}</span>
+            <span class="text-2xl font-bold text-green-400">${{ total$ | async }}</span>
           </p>
         </div>
         <button

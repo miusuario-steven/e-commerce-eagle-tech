@@ -14,7 +14,7 @@ export default {
         'fade-slide-up': 'fade-slide-up 0.8s ease-out both',
         'spin-slow': 'spin 40s linear infinite',
       },
-      keyframes: {
+      keyframes: {  
         gradient: {
           '0%, 100%': {
             backgroundPosition: '0% 50%',

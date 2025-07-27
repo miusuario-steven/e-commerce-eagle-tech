@@ -1,55 +1,49 @@
 <app-header-admin></app-header-admin>
 
-<!-- 🌌 Fondo galáctico para categoría -->
-<section class="relative min-h-screen bg-gradient-to-br from-galaxyStart via-galaxyMid to-galaxyEnd bg-[length:400%_400%] animate-gradient px-4 py-16 text-white overflow-hidden">
+<section class="min-h-screen bg-transparent px-4 py-10 text-white">
+  <div class="max-w-2xl mx-auto">
 
-  <!-- 💫 Glow animado supernova -->
-  <div class="absolute w-[500px] h-[500px] bg-galaxyBurst opacity-10 rounded-full blur-3xl animate-spin-slow top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0"></div>
+    <!-- Contenedor Glassmorphism para el formulario -->
+    <div class="relative border border-violet-500/40 rounded-xl bg-white/10 backdrop-blur-lg ring-2 ring-violet-500/20 shadow-neon-violet transition-all duration-500 p-6">
 
-  <div class="relative z-10 max-w-3xl mx-auto">
+      <!-- Fondo galáctico animado (opcional, si se desea un efecto similar al header) -->
+      <div class="absolute inset-0 bg-gradient-to-br from-galaxyStart via-galaxyMid to-galaxyEnd opacity-90 -z-10 bg-[length:400%_400%] animate-gradient rounded-xl"></div>
 
-    <!-- 🧭 Breadcrumb + título -->
-    <div class="mb-8">
-      <h1 class="text-3xl font-bold mb-2">Crear Categoría</h1>
-      <nav class="text-white/70 text-sm">
-        <ol class="flex space-x-2">
-          <li><a routerLink="/admin/category" class="hover:text-cyan-300">Categorías</a></li>
-          <li>/</li>
-          <li>Crear</li>
-        </ol>
-      </nav>
+      <!-- Formulario -->
+      <form [formGroup]="categoryForm" (ngSubmit)="saveCategory()" class="relative z-10 p-2">
+
+        <!-- Título dinámico -->
+        <h1 class="text-3xl font-bold text-gray-100 mb-6">{{ pageTitle }}</h1>
+
+        <!-- Campo de Nombre -->
+        <div class="mb-6">
+          <label for="name" class="block text-gray-200 text-sm font-bold mb-2">Nombre de la Categoría</label>
+          <input
+            type="text"
+            id="name"
+            formControlName="name"
+            placeholder="Ej: Electrónica, Ropa, Hogar"
+            class="w-full px-4 py-2 border border-violet-500/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500 bg-white/5 text-white placeholder-gray-300"
+            [ngClass]="{ 'border-red-500': f['name'].invalid && (f['name'].dirty || f['name'].touched) }"
+          />
+          <div *ngIf="f['name'].invalid && (f['name'].dirty || f['name'].touched)" class="text-red-400 text-xs italic mt-2">
+            <div *ngIf="f['name'].errors?.['required']">El nombre es obligatorio.</div>
+            <div *ngIf="f['name'].errors?.['minlength']">Debe tener al menos 3 caracteres.</div>
+          </div>
+        </div>
+
+        <!-- Botones de Acción -->
+        <div class="flex items-center justify-end space-x-4">
+          <a routerLink="/admin/category" class="bg-gray-600/40 hover:bg-gray-700/60 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline transition duration-300 border border-gray-500/40">
+            Cancelar
+          </a>
+          <button type="submit" [disabled]="categoryForm.invalid" class="bg-violet-600/40 hover:bg-violet-700/60 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline transition duration-300 disabled:bg-gray-400/40 border border-violet-500/40">
+            {{ isEditMode ? 'Actualizar Categoría' : 'Guardar Categoría' }}
+          </button>
+        </div>
+
+      </form>
     </div>
-
-    <!-- 📝 Formulario glassmorphism -->
-    <form (ngSubmit)="addCategory()" class="space-y-6 bg-white/10 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-8 animate-fade-slide-up">
-      <input type="hidden" [(ngModel)]="id" name="id" />
-
-      <!-- Campo nombre -->
-      <div>
-        <label for="name" class="block mb-1 text-sm font-medium">Nombre de la categoría</label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          [(ngModel)]="name"
-          placeholder="Ingrese el nombre de la categoría"
-          required
-          minlength="3"
-          autocomplete="off"
-          class="w-full px-4 py-2 rounded-lg bg-white/20 text-white placeholder-white/70 border border-white/30 focus:outline-none focus:ring-2 focus:ring-cyan-400"
-        />
-      </div>
-
-      <!-- Botón -->
-      <div class="text-left">
-        <button
-          type="submit"
-          class="bg-cyan-500 hover:bg-cyan-600 hover:shadow-[0_0_15px_3px_#9333ea] text-white px-6 py-3 rounded-lg font-semibold transition shadow-md"
-        >
-          Guardar categoría
-        </button>
-      </div>
-    </form>
 
   </div>
 </section>

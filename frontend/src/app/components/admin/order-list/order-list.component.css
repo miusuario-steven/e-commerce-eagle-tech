@@ -1,0 +1,18 @@
+/*
+  Estilos para la vista de tarjeta en móvil.
+  Estos estilos aseguran que las etiquetas de datos (ej: "Cliente:")
+  solo aparezcan en pantallas pequeñas donde la tabla se convierte en tarjetas.
+*/
+.data-label {
+  @apply font-semibold text-white/60 mr-2;
+}
+
+/*
+  En pantallas medianas y más grandes (md:), donde se muestra la vista de tabla,
+  ocultamos las etiquetas de datos para evitar duplicación con los encabezados.
+*/
+@screen md {
+  .data-label {
+    @apply hidden;
+  }
+}

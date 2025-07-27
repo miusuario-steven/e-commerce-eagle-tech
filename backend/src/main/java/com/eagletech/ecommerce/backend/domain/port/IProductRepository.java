@@ -1,13 +1,8 @@
 package com.eagletech.ecommerce.backend.domain.port;
 
-import java.util.Optional;
-
 import com.eagletech.ecommerce.backend.domain.model.Product;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-public interface IProductRepository {
-    Product save (Product product);
-    Iterable<Product> findALL();
-    Product findById(Integer id);
-    void deleteById(Integer id);
-    Optional<Product> findTopByOrderByIdDesc();
+public interface IProductRepository extends JpaRepository<Product, Integer>, JpaSpecificationExecutor<Product> {
 }

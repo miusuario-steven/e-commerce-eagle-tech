@@ -30,7 +30,15 @@
       <!-- 🛒 Navegación -->
       <nav class="flex items-center space-x-4 text-sm">
         <a routerLink="/cart/sumary" class="hover:text-violet-300 transition font-medium">Carrito</a>
-        <a routerLink="/user/login" class="hover:text-violet-300 transition font-medium">Login</a>
+        
+        <ng-container *ngIf="isLoggedIn; else loggedOut">
+          <a routerLink="/order-history" class="hover:text-violet-300 transition font-medium">Mis Órdenes</a>
+          <a routerLink="/logout" class="hover:text-violet-300 transition font-medium">Cerrar Sesión</a>
+        </ng-container>
+
+        <ng-template #loggedOut>
+          <a routerLink="/user/login" class="hover:text-violet-300 transition font-medium">Login</a>
+        </ng-template>
       </nav>
     </div>
   </div>

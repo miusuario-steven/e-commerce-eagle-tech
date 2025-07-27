@@ -1,66 +1,93 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { Product } from '../../common/product';
 import { ProductService } from '../../services/product.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { HeaderAdminComponent } from '../header-admin/header-admin.component';
 import { Router, RouterModule } from '@angular/router';
-import Swal from 'sweetalert2';
-
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [CommonModule, HeaderAdminComponent,RouterModule],
+  imports: [CommonModule, HeaderAdminComponent, RouterModule],
   templateUrl: './product-list.component.html',
-  styleUrl: './product-list.component.css'
+  styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent implements OnInit {
   products: Product[] = [];
+  isLoading: boolean = true;
+
+  // Paging properties
+  currentPage: number = 0;
+  pageSize: number = 10;
+  totalElements: number = 0;
+  totalPages: number = 0;
 
   constructor(
     private productService: ProductService,
-    private router: Router
+    private router: Router,
+    private notificationService: NotificationService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit(): void {
-    this.listProducts();
+    if (isPlatformBrowser(this.platformId)) {
+      this.listProducts();
+    }
   }
 
   listProducts(): void {
-    this.productService.getProduct().subscribe(
-      data => {
-        this.products = data;
-        console.log(this.products);
+    this.isLoading = true;
+    this.productService.getProducts(this.currentPage, this.pageSize).subscribe(
+      response => {
+        this.products = response.content;
+        this.totalElements = response.totalElements;
+        this.totalPages = response.totalPages;
+        this.isLoading = false;
+      },
+      error => {
+        this.isLoading = false;
+        this.notificationService.showError("Error", "No se pudieron cargar los productos.");
+        console.error('Error fetching products:', error);
       }
     );
   }
 
-  deleteProductById(id: number) {
-
-    Swal.fire({
-      title: "Quieres eliminar el producto?",
-      text: "",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "si, Eliminar",
-      cancelButtonText: "Cancelar",
-    }).then((result) => {
+  deleteProductById(id: number): void {
+    this.notificationService.confirmDelete("¿Quieres eliminar el producto?", "").then((result) => {
       if (result.isConfirmed) {
         this.productService.deleteProductById(id).subscribe(
-          () => this.listProducts()
+          () => {
+            this.notificationService.showSuccess("Productos", "Producto eliminado correctamente.");
+            // Vuelve a cargar la página actual, o la anterior si el elemento eliminado era el único en la página actual
+            if (this.products.length === 1 && this.currentPage > 0) {
+              this.currentPage--;
+            }
+            this.listProducts();
+          },
+          error => {
+            this.notificationService.showError("Error", "No se pudo eliminar el producto.");
+            console.error('Error deleting product:', error);
+          }
         );
-        Swal.fire({
-          title: "Productos",
-          text: "Producto eliminado correctamente.",
-          icon: "success"
-        });
       }
     });
   }
 
   goToAddProductForm(): void {
     this.router.navigate(['/admin/product/addproduct']);
+  }
+
+  onPageChange(page: number): void {
+    this.currentPage = page;
+    this.listProducts();
+  }
+
+  // Helper to generate page numbers for pagination controls
+  getPageNumbers(): number[] {
+    if (this.totalPages > 0) {
+      return Array(this.totalPages).fill(0).map((x, i) => i);
+    }
+    return [];
   }
 }

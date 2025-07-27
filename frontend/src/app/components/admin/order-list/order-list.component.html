@@ -1,0 +1,127 @@
+<!-- Contenedor principal con padding y tema de fondo -->
+<div class="container mx-auto p-4 sm:p-6 lg:p-8 text-white">
+
+  <!-- Encabezado -->
+  <header class="mb-8">
+    <h1 class="text-3xl font-bold text-center text-white drop-shadow-lg">Gestión de Órdenes</h1>
+    <p class="text-center text-white/70 mt-1">Supervisa y administra todos los pedidos de la tienda.</p>
+  </header>
+
+  <!-- Panel de Filtros (Glassmorphism) -->
+  <div class="mb-8 p-4 bg-white/10 backdrop-blur-lg rounded-xl shadow-lg border border-white/20">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <!-- Filtro por Cliente -->
+      <div>
+        <label for="customerFilter" class="block text-sm font-medium text-white/80 mb-1">Buscar Cliente</label>
+        <input
+          type="text"
+          id="customerFilter"
+          placeholder="Nombre o apellido..."
+          [(ngModel)]="customerFilter"
+          (input)="onFilterChange()"
+          class="w-full bg-white/10 border border-white/20 rounded-lg py-2 px-3 text-white placeholder-white/50 focus:ring-2 focus:ring-violet-400 focus:border-violet-400 transition"
+        />
+      </div>
+      <!-- Filtro por Estado -->
+      <div>
+        <label for="statusFilter" class="block text-sm font-medium text-white/80 mb-1">Filtrar por Estado</label>
+        <select
+          id="statusFilter"
+          [(ngModel)]="statusFilter"
+          (change)="onFilterChange()"
+          class="w-full bg-white/10 border border-white/20 rounded-lg py-2 px-3 text-white focus:ring-2 focus:ring-violet-400 focus:border-violet-400 transition"
+        >
+          <option value="" class="bg-galaxyMid">Todos los Estados</option>
+          <option value="PENDING" class="bg-galaxyMid">Pendiente</option>
+          <option value="PAID" class="bg-galaxyMid">Pagado</option>
+          <option value="CONFIRMED" class="bg-galaxyMid">Confirmado</option>
+          <option value="CANCELED" class="bg-galaxyMid">Cancelado</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contenedor de la Lista de Órdenes (Responsive) -->
+  <div class="bg-white/5 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/10 p-4 sm:p-6">
+    <!-- Encabezados de la tabla (Solo para Desktop) -->
+    <div class="hidden md:grid md:grid-cols-5 gap-4 font-semibold text-cyan-300/80 px-4 py-2 border-b border-white/20">
+      <div>ID de Orden</div>
+      <div>Cliente</div>
+      <div>Fecha</div>
+      <div class="text-center">Estado</div>
+      <div class="text-right">Total</div>
+    </div>
+
+    <!-- Lista de Órdenes -->
+    <div *ngIf="orderPage && orderPage.content.length > 0; else noOrders" class="space-y-4 md:space-y-0">
+      <!-- Cada orden es una "tarjeta" en móvil y una "fila" en desktop -->
+      <div *ngFor="let order of orderPage.content"
+           class="grid grid-cols-2 md:grid-cols-5 gap-x-4 gap-y-2 p-4 rounded-lg md:p-0 md:py-4 md:px-4 bg-white/10 md:bg-transparent transition hover:bg-white/20 md:border-t md:border-white/10 md:rounded-none">
+
+        <!-- Columna ID -->
+        <div class="col-span-1 md:col-span-1">
+          <div class="font-bold text-cyan-400 md:font-normal md:text-white">#{{ order.id }}</div>
+        </div>
+
+        <!-- Columna Cliente -->
+        <div class="col-span-2 md:col-span-1">
+          <div class="data-label md:hidden">Cliente:</div>
+          <div>{{ order.customer.firstName }} {{ order.customer.lastName }}</div>
+        </div>
+
+        <!-- Columna Fecha -->
+        <div class="col-span-1 md:col-span-1">
+          <div class="data-label md:hidden">Fecha:</div>
+          <div class="text-white/80">{{ order.dateCreated | date: 'shortDate' }}</div>
+        </div>
+
+        <!-- Columna Estado -->
+        <div class="col-span-1 md:col-span-1 flex items-center md:justify-center">
+          <div class="data-label md:hidden">Estado:</div>
+          <span class="px-2 py-1 text-xs font-semibold rounded-full"
+                [ngClass]="{
+                  'bg-yellow-500/20 text-yellow-300': order.orderState.toString() === 'PENDING',
+                  'bg-green-500/20 text-green-300': order.orderState.toString() === 'PAID' || order.orderState.toString() === 'CONFIRMED',
+                  'bg-red-500/20 text-red-300': order.orderState.toString() === 'CANCELED'
+                }">
+            {{ order.orderState }}
+          </span>
+        </div>
+
+        <!-- Columna Total y Acción -->
+        <div class="col-span-2 md:col-span-1 text-left md:text-right flex flex-col md:items-end justify-between">
+          <div class="md:mb-2">
+            <div class="data-label md:hidden">Total:</div>
+            <div class="font-semibold text-lg">{{ order.total | currency }}</div>
+          </div>
+          <a [routerLink]="['/admin/orders', order.id]"
+             class="mt-2 md:mt-0 text-sm bg-white/20 hover:bg-white/30 px-3 py-1 rounded-md backdrop-blur-sm text-white font-medium transition">
+            Ver Detalles
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Estado de "No hay órdenes" -->
+    <ng-template #noOrders>
+      <div class="text-center py-16 text-white/60">
+        <p>No se encontraron órdenes que coincidan con los filtros.</p>
+      </div>
+    </ng-template>
+  </div>
+
+  <!-- Paginación -->
+  <div *ngIf="orderPage && orderPage.totalPages > 1" class="flex justify-between items-center mt-8 text-sm">
+    <button (click)="onPageChange(orderPage.number - 1)" [disabled]="orderPage.first"
+            class="px-4 py-2 bg-white/10 hover:bg-white/20 border border-white/20 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed">
+      Anterior
+    </button>
+    <span>
+      Página <span class="font-bold">{{ orderPage.number + 1 }}</span> de <span class="font-bold">{{ orderPage.totalPages }}</span>
+    </span>
+    <button (click)="onPageChange(orderPage.number + 1)" [disabled]="orderPage.last"
+            class="px-4 py-2 bg-white/10 hover:bg-white/20 border border-white/20 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed">
+      Siguiente
+    </button>
+  </div>
+</div>

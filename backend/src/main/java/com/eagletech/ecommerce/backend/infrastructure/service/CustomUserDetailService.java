@@ -1,26 +1,31 @@
 package com.eagletech.ecommerce.backend.infrastructure.service;
 
+import com.eagletech.ecommerce.backend.domain.model.User;
+import com.eagletech.ecommerce.backend.usecases.ManageUserUseCase;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.eagletech.ecommerce.backend.application.UserService;
-import com.eagletech.ecommerce.backend.domain.model.User;
-
 @Service
 public class CustomUserDetailService implements UserDetailsService {
-    private UserService userService;
+    private final ManageUserUseCase manageUserUseCase;
 
-    public CustomUserDetailService(UserService userService) {
-        this.userService = userService;
+    public CustomUserDetailService(ManageUserUseCase manageUserUseCase) {
+        this.manageUserUseCase = manageUserUseCase;
     }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userService.findByEmail(username);
-        return org.springframework.security.core.userdetails.User.builder().username(user.getEmail())
-            .password(user.getPassword()).roles(user.getUserType().name()).build();
-
+        try {
+            User user = manageUserUseCase.getUserByEmail(username);
+            return org.springframework.security.core.userdetails.User.builder()
+                    .username(user.getEmail())
+                    .password(user.getPassword())
+                    .roles(user.getUserType().name())
+                    .build();
+        } catch (Exception e) {
+            throw new UsernameNotFoundException("User not found with email: " + username);
+        }
     }
-
 }

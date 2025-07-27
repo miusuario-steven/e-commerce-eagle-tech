@@ -1,33 +1,30 @@
-<section class="min-h-screen flex items-center justify-center bg-gradient-to-br from-galaxyStart via-galaxyMid to-galaxyEnd px-4 py-16">
-  <div class="bg-white/10 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-2xl shadow-violet-500/20 text-white p-8 sm:p-12 max-w-xl text-center animate-fade-slide-up">
+<app-header-user></app-header-user>
 
-    <!-- ✅ Ícono de éxito grande y llamativo -->
-    <div class="text-green-400 text-6xl sm:text-7xl mb-6 drop-shadow-lg animate-bounce">
-      ✅
+<section class="min-h-screen bg-gradient-to-br from-galaxyStart via-galaxyMid to-galaxyEnd flex items-center justify-center px-4 py-12 text-white">
+  <div class="max-w-2xl w-full bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl p-8 text-center">
+
+    <!-- Loading State -->
+    <div *ngIf="isLoading">
+      <h2 class="text-2xl font-bold text-cyan-300 mb-4">Procesando tu pago...</h2>
+      <p class="text-white/80 mb-6">Estamos confirmando tu transacción con PayPal. Por favor, no cierres esta ventana.</p>
+      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-400 mx-auto"></div>
     </div>
 
-    <!-- 🎉 Título de éxito -->
-    <h2 class="text-3xl sm:text-4xl font-extrabold mb-4 drop-shadow-md">¡Pago exitoso!</h2>
-
-    <!-- 🛍️ Mensaje de confirmación -->
-    <p class="text-white/80 text-lg mb-8">
-      Gracias por confiar en <span class="text-cyan-300 font-semibold">Eagle Tech</span>.
-      Tu orden ha sido confirmada y está en camino hacia ti.
-    </p>
-
-    <!-- 🚀 Botones de navegación -->
-    <div class="flex flex-col sm:flex-row justify-center gap-4">
-      <a
-        routerLink="/"
-        class="bg-gradient-to-r from-cyan-500 to-violet-600 hover:from-cyan-600 hover:to-violet-700 px-6 py-3 rounded-xl font-bold text-white shadow-md shadow-cyan-400/30 transition"
-      >
-        🏠 Volver al inicio
+    <!-- Success State -->
+    <div *ngIf="!isLoading && paymentSuccessful">
+      <h1 class="text-4xl font-bold text-green-400 mb-4">¡Pago Exitoso!</h1>
+      <p class="text-lg text-white/90 mb-6">Tu orden ha sido confirmada y está siendo preparada. Recibirás un correo con los detalles.</p>
+      <a routerLink="/" class="bg-gradient-to-r from-violet-600 to-cyan-500 hover:from-violet-700 hover:to-cyan-600 text-white py-2 px-6 rounded-full font-bold shadow-lg transition">
+        Volver a la Tienda
       </a>
-      <a
-        routerLink="/user/orders"
-        class="bg-white/20 hover:bg-white/30 px-6 py-3 rounded-xl font-semibold text-white transition shadow-inner"
-      >
-        📦 Ver mis órdenes
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="!isLoading && !paymentSuccessful">
+      <h1 class="text-4xl font-bold text-red-500 mb-4">Error en el Pago</h1>
+      <p class="text-lg text-white/90 mb-6">No pudimos confirmar tu pago. Si crees que esto es un error, por favor contacta a nuestro equipo de soporte.</p>
+      <a routerLink="/" class="bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-800 text-white py-2 px-6 rounded-full font-bold shadow-lg transition">
+        Volver a la Tienda
       </a>
     </div>
 

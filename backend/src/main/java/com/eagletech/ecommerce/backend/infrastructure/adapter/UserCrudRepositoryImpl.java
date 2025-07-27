@@ -1,6 +1,7 @@
 package com.eagletech.ecommerce.backend.infrastructure.adapter;
 
 import org.springframework.stereotype.Repository;
+import java.util.Optional;
 import com.eagletech.ecommerce.backend.domain.model.User;
 import com.eagletech.ecommerce.backend.domain.port.IUserRepository;
 import com.eagletech.ecommerce.backend.infrastructure.mapper.UserMapper;
@@ -22,13 +23,13 @@ public class UserCrudRepositoryImpl implements IUserRepository {
     }
 
     @Override
-    public User findByEmail(String email) {return userMapper.toUser(iUserCrudRepository.findByEmail(email).orElseThrow(
-        () -> new RuntimeException("User wich email: "+email+" not found")
-    ));}
+    public Optional<User> findByEmail(String email) {
+        return iUserCrudRepository.findByEmail(email).map(userMapper::toUser);
+    }
 
     @Override
-    public User findById(Integer id) {
-        return userMapper.toUser(iUserCrudRepository.findById(id).get());
+    public Optional<User> findById(Integer id) {
+        return iUserCrudRepository.findById(id).map(userMapper::toUser);
     }
 
 }

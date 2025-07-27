@@ -8,7 +8,7 @@ import org.mapstruct.Mappings;
 import com.eagletech.ecommerce.backend.domain.model.Product;
 import com.eagletech.ecommerce.backend.infrastructure.entity.ProductEntity;
 
-@Mapper(componentModel = "spring")
+@Mapper
 public interface ProductMapper {
     @Mappings(
         {
@@ -20,10 +20,11 @@ public interface ProductMapper {
             @Mapping(source = "price", target = "price"),
             @Mapping(source = "dateCreated", target = "dateCreated"),
             @Mapping(source = "dateUpdated", target = "dateUpdated"),
+            @Mapping(source = "version", target = "version"),
             @Mapping(source = "userEntity.id", target = "userId"),
             @Mapping(source = "categoryEntity.id", target = "categoryId"),
         }
-    )   
+    )    
 
     Product toProduct(ProductEntity productEntity);
     Iterable<Product> toProductList(Iterable<ProductEntity> productEntities);

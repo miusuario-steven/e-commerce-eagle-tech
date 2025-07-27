@@ -9,7 +9,7 @@ import com.eagletech.ecommerce.backend.domain.model.OrderProduct;
 import com.eagletech.ecommerce.backend.infrastructure.entity.OrdenProductEntity;
 
 
-@Mapper(componentModel = "spring")
+@Mapper
 public interface IOrderProductMapper {
     @Mappings(
         {

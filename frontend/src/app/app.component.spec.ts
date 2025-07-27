@@ -5,7 +5,7 @@ describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [AppComponent],
-    }).compileComponents();
+    }).compileComponents();  
   });
 
   it('should create the app', () => {
@@ -27,3 +27,4 @@ describe('AppComponent', () => {
     expect(compiled.querySelector('h1')?.textContent).toContain('Hello, frontend');
   });
 });
+ 
